@@ -13,16 +13,15 @@ export const Header = () => {
 			)}>
 			<Logo />
 
-			<div className='flex items-center gap-12'>
-				<form autoComplete='off' className='flex relative'>
+			<div className='flex items-center gap-6 lg:gap-12'>
+				<form autoComplete='off' className='relative hidden md:flex	'>
 					<Input
 						size='lg'
 						type='text'
 						placeholder='Keyword...'
-						// className='w-full lg:max-w-[400px]'
 						classNames={{
 							inputWrapper: [
-								'min-w-[300px] lg:max-w-[400px] shadow-lg',
+								'md:w-[300px] shadow-lg',
 								'focus-within:!ring-0 focus-within:!ring-transparent pr-24',
 							],
 						}}
