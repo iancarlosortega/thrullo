@@ -1,8 +1,8 @@
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/input';
-import { classNames } from '@/utils';
 import { UserDropdown } from '.';
 import { Logo } from './Logo';
+import { classNames } from '@/utils';
 
 export const Header = () => {
 	return (
@@ -21,7 +21,7 @@ export const Header = () => {
 						placeholder='Keyword...'
 						classNames={{
 							inputWrapper: [
-								'md:w-[300px] shadow-lg',
+								'md:w-[300px] shadow-lg caret-sky-500',
 								'focus-within:!ring-0 focus-within:!ring-transparent pr-24',
 							],
 						}}
