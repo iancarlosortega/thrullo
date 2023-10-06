@@ -8,7 +8,7 @@ export const Header = () => {
 	return (
 		<header
 			className={classNames(
-				'p-2 md:px-4 lg:px-6 flex justify-between items-center h-[80px]',
+				'p-2 md:px-4 lg:px-6 flex justify-between items-center h-[80px] bg-white dark:bg-neutral-950',
 				'shadow-[0px_2px_2px_0px_rgba(0,0,0,0.05)] dark:shadow-[0px_2px_2px_0px_#1A202C]'
 			)}>
 			<Logo />
