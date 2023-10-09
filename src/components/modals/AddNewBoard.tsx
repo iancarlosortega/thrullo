@@ -20,6 +20,7 @@ import { AiFillLock, AiOutlinePlus } from 'react-icons/ai';
 import { HiPhotograph } from 'react-icons/hi';
 import { BiWorld } from 'react-icons/bi';
 import useAuthStore from '@/store/authStore';
+import { Database } from '@/types';
 
 interface IFormValues {
 	title: string;
@@ -41,7 +42,7 @@ export const AddNewBoard = ({
 		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 	const router = useRouter();
-	const supabase = createClientComponentClient();
+	const supabase = createClientComponentClient<Database>();
 
 	useEffect(() => {
 		if (!isOpen) {
@@ -57,7 +58,7 @@ export const AddNewBoard = ({
 				description,
 				is_public: isPublic,
 				cover_url: coverUrl,
-				created_by: user?.id,
+				owner: user!.id,
 			})
 			.select();
 
