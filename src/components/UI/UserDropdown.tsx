@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { toast } from 'sonner';
 import {
@@ -14,7 +13,7 @@ import { BsFillCaretDownFill } from 'react-icons/bs';
 import { MdOutlineLogout } from 'react-icons/md';
 import useAuthStore from '@/store/authStore';
 import { ThemeToggle } from './ThemeToggle';
-import { NoProfilePhoto } from './NoProfilePhoto';
+import { ProfilePhoto } from './ProfilePhoto';
 
 export const UserDropdown = () => {
 	const { user } = useAuthStore();
@@ -42,20 +41,10 @@ export const UserDropdown = () => {
 			<DropdownTrigger>
 				<div className='flex items-center gap-4 px-4 py-2 rounded-md cursor-pointer hover:bg-secondary-lts dark:hover:bg-neutral-900 transition-colors'>
 					<div>
-						{user?.user_metadata.avatar_url ? (
-							<Image
-								src={user?.user_metadata.avatar_url}
-								alt='Profile Picture'
-								width={40}
-								height={40}
-								className='rounded-lg'
-							/>
-						) : (
-							<NoProfilePhoto fullName={user?.user_metadata.full_name} />
-						)}
+						<ProfilePhoto user={user!} />
 					</div>
 					<p className='font-bold text-dark dark:text-white'>
-						{user?.user_metadata.full_name}
+						{user?.full_name}
 					</p>
 					<BsFillCaretDownFill className='text-dark dark:text-gray-200' />
 				</div>

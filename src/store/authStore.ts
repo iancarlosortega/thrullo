@@ -1,12 +1,12 @@
-import { Session } from '@supabase/supabase-js';
+import { User } from '@/types';
 import { create } from 'zustand';
 
 type State = {
-	user: Session['user'] | null;
+	user: User | null;
 };
 
 type Actions = {
-	updateLoginUser: (user: Session['user']) => void;
+	updateLoginUser: (user: User) => void;
 };
 
 const useAuthStore = create<State & Actions>()(set => ({

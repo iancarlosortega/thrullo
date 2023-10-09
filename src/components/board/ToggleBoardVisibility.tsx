@@ -42,7 +42,6 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 		<Dropdown placement='bottom-start'>
 			<DropdownTrigger>
 				<Button
-					size='lg'
 					className='bg-secondary-lts text-secondary font-medium w-[150px]'
 					startContent={isPublic ? <BiWorld /> : <AiFillLock />}>
 					{isPublic ? 'Public ' : 'Private'}

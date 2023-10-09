@@ -30,14 +30,15 @@ export const RegisterForm = () => {
 		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 
-	const onSubmit = async (formValues: IFormValues) => {
+	const onSubmit = async ({ email, password, fullName }: IFormValues) => {
 		const { error } = await supabase.auth.signUp({
-			email: formValues.email,
-			password: formValues.password,
+			email,
+			password,
 			options: {
 				emailRedirectTo: `${location.origin}/auth/callback`,
 				data: {
-					full_name: formValues.fullName,
+					full_name: fullName,
+					email,
 				},
 			},
 		});

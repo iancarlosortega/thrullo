@@ -8,7 +8,7 @@ export const NoProfilePhoto: React.FC<Props> = ({ fullName }) => {
 	const secondLetter = split[1]?.charAt(0);
 
 	return (
-		<div className='flex justify-center items-center gap-[2px] h-10 w-10 rounded-lg bg-secondary-lt text-white font-medium'>
+		<div className='flex justify-center items-center h-10 w-10 rounded-lg bg-secondary-lt text-white font-medium'>
 			<span>{firstLetter}</span>
 			<span>{secondLetter}</span>
 		</div>

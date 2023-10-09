@@ -46,22 +46,59 @@ export interface Database {
           }
         ]
       }
+      members: {
+        Row: {
+          board_id: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          board_id: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          board_id?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "members_board_id_fkey"
+            columns: ["board_id"]
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "members_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       users: {
         Row: {
           avatar_url: string | null
           created_at: string
+          email: string
           full_name: string
           id: string
         }
         Insert: {
           avatar_url?: string | null
           created_at?: string
+          email: string
           full_name: string
           id: string
         }
         Update: {
           avatar_url?: string | null
           created_at?: string
+          email?: string
           full_name?: string
           id?: string
         }
