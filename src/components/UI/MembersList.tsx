@@ -1,5 +1,5 @@
 import { User } from '@/types';
-import { ProfilePhoto } from '.';
+import { ProfilePhoto } from './ProfilePhoto';
 
 interface Props {
 	members: User[];

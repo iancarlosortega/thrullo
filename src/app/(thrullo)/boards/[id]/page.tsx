@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { BoardHeader, MembersList } from '@/components';
+import { BoardHeader } from '@/components';
 import { Board, User } from '@/types';
 
-const supabase = createServerComponentClient({ cookies });
-
 const getBoard = async (id: string): Promise<Board | null> => {
+	const supabase = createServerComponentClient({ cookies });
 	const { data, error } = await supabase
 		.from('boards')
 		// TODO: Check this .select('*, owner(*), members(*), lists(*), lists.cards(*)')
@@ -22,6 +21,7 @@ const getBoard = async (id: string): Promise<Board | null> => {
 };
 
 const getMembers = async (id: string): Promise<User[]> => {
+	const supabase = createServerComponentClient({ cookies });
 	const { data, error } = await supabase
 		.from('members')
 		.select('user:user_id(*)')

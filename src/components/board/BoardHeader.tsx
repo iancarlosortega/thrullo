@@ -14,7 +14,7 @@ export const BoardHeader: React.FC<Props> = ({ board, members }) => {
 			<div className='flex items-center gap-4'>
 				<ToggleBoardVisibility board={board} />
 				<MembersList members={members} />
-				<AddMembersButton boardId={board.id} />
+				<AddMembersButton boardId={board.id} members={members} />
 			</div>
 		</header>
 	);

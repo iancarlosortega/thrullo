@@ -42,14 +42,14 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 		<Dropdown placement='bottom-start'>
 			<DropdownTrigger>
 				<Button
-					className='bg-secondary-lts text-secondary font-medium w-[150px]'
+					className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 font-medium h-12 w-32'
 					startContent={isPublic ? <BiWorld /> : <AiFillLock />}>
 					{isPublic ? 'Public ' : 'Private'}
 				</Button>
 			</DropdownTrigger>
 			<DropdownMenu aria-label='Single selection example' variant='flat'>
 				<DropdownItem>
-					<span className='font-semibold text-neutral-800 block'>
+					<span className='font-semibold text-neutral-800 block dark:text-white'>
 						Visibility
 					</span>
 					<span>Choose who can see this board.</span>

@@ -23,6 +23,7 @@ import { Database, User } from '@/types';
 
 interface Props {
 	boardId: string;
+	members: User[];
 }
 
 interface IFormValues {
@@ -34,6 +35,7 @@ export const AddNewMembers = ({
 	onChange,
 	onClose,
 	boardId,
+	members,
 }: UseDisclosureProps & Props) => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +44,7 @@ export const AddNewMembers = ({
 		register,
 		reset,
 		handleSubmit,
-		formState: { errors, isSubmitting },
+		formState: { isSubmitting },
 	} = useForm<IFormValues>();
 	const router = useRouter();
 	const supabase = createClientComponentClient<Database>();
@@ -74,22 +76,47 @@ export const AddNewMembers = ({
 
 	const onSubmit = async ({ users }: IFormValues) => {
 		if (users === '' || users.length === 0) return onClose!();
+		let usersArr: string[] = [];
 
-		const usersArr = users.split(',');
+		if (typeof users === 'string') {
+			usersArr = users.split(',');
+		} else {
+			usersArr = users;
+		}
 
-		usersArr.forEach(async userId => {
-			const { error } = await supabase.from('members').insert({
-				user_id: userId,
-				board_id: boardId,
-			});
+		const currentMembers = members.map(member => member.id);
 
-			if (error) {
-				toast.error(error.message);
-				return;
+		// Remove members that are not in the new list
+		currentMembers.forEach(async userId => {
+			if (!usersArr.includes(userId)) {
+				const { error } = await supabase
+					.from('members')
+					.delete()
+					.eq('user_id', userId);
+
+				if (error) {
+					toast.error(error.message);
+					return;
+				}
 			}
 		});
 
-		toast.success('Members added successfully');
+		// Add new members
+		usersArr.forEach(async userId => {
+			if (!currentMembers.includes(userId)) {
+				const { error } = await supabase.from('members').insert({
+					user_id: userId,
+					board_id: boardId,
+				});
+
+				if (error) {
+					toast.error(error.message);
+					return;
+				}
+			}
+		});
+
+		toast.success('Members updated successfully');
 		reset();
 		onClose!();
 		router.refresh();
@@ -103,7 +130,7 @@ export const AddNewMembers = ({
 			placement='top'
 			classNames={{
 				backdrop:
-					'bg-gradient-to-t from-zinc-300 to-zinc-300/10 backdrop-opacity-20',
+					'bg-gradient-to-t from-zinc-300 dark:from-zinc-600/50 to-zinc-300/10 dark:to-zinc-600/10 backdrop-opacity-20',
 			}}>
 			<ModalContent>
 				{onClose => (
@@ -115,12 +142,15 @@ export const AddNewMembers = ({
 							<ModalBody>
 								<Select
 									items={users}
+									defaultSelectedKeys={members.map(member => member.id)}
 									label='Add new members'
 									variant='bordered'
 									isMultiline={true}
 									selectionMode='multiple'
 									placeholder='Select a user'
 									labelPlacement='outside'
+									isLoading={isLoading}
+									isDisabled={isLoading}
 									classNames={{
 										trigger: 'min-h-unit-12 py-2',
 									}}
@@ -134,7 +164,7 @@ export const AddNewMembers = ({
 														variant='bordered'
 														classNames={{
 															content: 'text-sky-500',
-															base: 'bg-sky-50 border-sky-500',
+															base: 'bg-sky-50 border-sky-500 dark:bg-sky-500/10 dark:border-sky-500/20',
 														}}
 														key={item.key}>
 														{item.data?.full_name}

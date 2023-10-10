@@ -3,12 +3,14 @@
 import { Button, useDisclosure } from '@nextui-org/react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { AddNewMembers } from '@/components/modals/AddNewMembers';
+import { User } from '@/types';
 
 interface Props {
 	boardId: string;
+	members: User[];
 }
 
-export const AddMembersButton: React.FC<Props> = ({ boardId }) => {
+export const AddMembersButton: React.FC<Props> = ({ boardId, members }) => {
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
 	return (
@@ -25,6 +27,7 @@ export const AddMembersButton: React.FC<Props> = ({ boardId }) => {
 				onChange={onOpenChange}
 				onClose={onClose}
 				boardId={boardId}
+				members={members}
 			/>
 		</>
 	);

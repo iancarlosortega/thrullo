@@ -14,7 +14,7 @@ interface Props {
 
 export const BoardCardItem: React.FC<Props> = ({ board }) => {
 	return (
-		<li className='rounded-lg bg-white shadow-lg text-lg p-4'>
+		<li className='rounded-lg bg-white dark:bg-stone-900 shadow-lg text-lg p-4'>
 			<Link className='' href={`/boards/${board.id}`}>
 				<div className='mb-2'>
 					<Image
