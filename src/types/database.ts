@@ -18,6 +18,7 @@ export interface Database {
           is_public: boolean
           owner: string
           title: string
+          updated_at: string
         }
         Insert: {
           cover_url?: string | null
@@ -27,6 +28,7 @@ export interface Database {
           is_public?: boolean
           owner: string
           title: string
+          updated_at?: string
         }
         Update: {
           cover_url?: string | null
@@ -36,6 +38,7 @@ export interface Database {
           is_public?: boolean
           owner?: string
           title?: string
+          updated_at?: string
         }
         Relationships: [
           {

@@ -92,7 +92,8 @@ export const AddNewMembers = ({
 				const { error } = await supabase
 					.from('members')
 					.delete()
-					.eq('user_id', userId);
+					.eq('user_id', userId)
+					.eq('board_id', boardId);
 
 				if (error) {
 					toast.error(error.message);

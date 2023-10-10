@@ -10,7 +10,7 @@ import {
 	DropdownMenu,
 	DropdownTrigger,
 } from '@nextui-org/react';
-import { AiFillLock } from 'react-icons/ai';
+import { AiFillLock, AiOutlineCheck } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
 import { Board, Database } from '@/types';
 
@@ -42,7 +42,7 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 		<Dropdown placement='bottom-start'>
 			<DropdownTrigger>
 				<Button
-					className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 font-medium h-12 w-32'
+					className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 font-medium h-12 px-6'
 					startContent={isPublic ? <BiWorld /> : <AiFillLock />}>
 					{isPublic ? 'Public ' : 'Private'}
 				</Button>
@@ -59,7 +59,8 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 					onClick={() => handleToggleVisibility(true)}
 					description='Anyone on the internet can see this.'
 					value='public'
-					startContent={<BiWorld />}>
+					startContent={<BiWorld />}
+					endContent={isPublic ? <AiOutlineCheck /> : undefined}>
 					Public
 				</DropdownItem>
 				<DropdownItem
@@ -67,7 +68,8 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 					onClick={() => handleToggleVisibility(false)}
 					description='Only board members can see this.'
 					value='private'
-					startContent={<AiFillLock />}>
+					startContent={<AiFillLock />}
+					endContent={!isPublic ? <AiOutlineCheck /> : undefined}>
 					Private
 				</DropdownItem>
 			</DropdownMenu>

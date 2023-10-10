@@ -2,10 +2,12 @@ import { create } from 'zustand';
 
 type State = {
 	theme: string;
+	isBoardInformationOpen: boolean;
 };
 
 type Actions = {
 	setTheme: (theme: string) => void;
+	setIsBoardInformationOpen: (isBoardInformationOpen: boolean) => void;
 };
 
 const getInitialTheme = (): string => {
@@ -23,7 +25,10 @@ const getInitialTheme = (): string => {
 
 const useUIStore = create<State & Actions>()(set => ({
 	theme: getInitialTheme(),
+	isBoardInformationOpen: false,
 	setTheme: theme => set({ theme }),
+	setIsBoardInformationOpen: isBoardInformationOpen =>
+		set({ isBoardInformationOpen }),
 }));
 
 export default useUIStore;

@@ -18,6 +18,7 @@ const config: Config = {
 				secondary: '#828282',
 				'secondary-lt': '#BDBDBD',
 				'secondary-lts': '#F2F2F2',
+				tertiary: '#333333',
 			},
 		},
 	},
