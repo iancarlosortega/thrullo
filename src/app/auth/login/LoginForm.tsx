@@ -51,10 +51,10 @@ export const LoginForm = () => {
 		}
 	}, []);
 
-	const onSubmit = async (formValues: IFormValues) => {
+	const onSubmit = async ({ email, password }: IFormValues) => {
 		const { error } = await supabase.auth.signInWithPassword({
-			email: formValues.email,
-			password: formValues.password,
+			email,
+			password,
 		});
 
 		if (error) {
@@ -72,7 +72,7 @@ export const LoginForm = () => {
 		}
 
 		if (isRememberSelected) {
-			localStorage.setItem('email', formValues.email);
+			localStorage.setItem('email', email);
 			localStorage.setItem('remember', 'true');
 		} else {
 			localStorage.removeItem('email');

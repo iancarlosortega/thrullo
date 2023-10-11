@@ -1,38 +1,33 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { BoardHeader } from '@/components';
-import { Board, User } from '@/types';
+import { AddListButton, BoardHeader, Lists } from '@/components';
+import { Board } from '@/types';
+import { classNames } from '@/utils';
 
 const getBoard = async (id: string): Promise<Board | null> => {
 	const supabase = createServerComponentClient({ cookies });
 	const { data, error } = await supabase
 		.from('boards')
 		// TODO: Check this .select('*, owner(*), members(*), lists(*), lists.cards(*)')
-		.select('*, owner(*)')
+		.select('*, owner(*), lists(*), members(user_id(*))')
 		.eq('id', id);
+	// .order('lists.created_at', { ascending: true });
 
 	if (error) {
 		console.log(error);
 		return null;
 	}
 
-	return data[0];
-};
+	// Give me sorted lists
 
-const getMembers = async (id: string): Promise<User[]> => {
-	const supabase = createServerComponentClient({ cookies });
-	const { data, error } = await supabase
-		.from('members')
-		.select('user:user_id(*)')
-		.eq('board_id', id);
-
-	if (error) {
-		console.log(error);
-		return [];
-	}
-
-	return data.map(({ user }: any) => user as User);
+	return {
+		...data[0],
+		lists: data[0].lists.sort((a: any, b: any) =>
+			a.created_at > b.created_at ? 1 : -1
+		),
+		members: data[0].members.map((member: any) => member.user_id),
+	};
 };
 
 export default async function BoardPage({
@@ -44,11 +39,17 @@ export default async function BoardPage({
 
 	if (!board) redirect('/');
 
-	const members = await getMembers(id);
-
 	return (
 		<>
-			<BoardHeader board={board!} members={members} />
+			<BoardHeader board={board!} members={board.members} />
+			<main
+				className={classNames(
+					'bg-gray-200/50 rounded-2xl py-4 px-8 my-6 h-full min-h-[calc(100vh-13rem)]',
+					'flex items-start overflow-x-auto'
+				)}>
+				<Lists lists={board.lists} />
+				<AddListButton boardId={board.id} />
+			</main>
 		</>
 	);
 }

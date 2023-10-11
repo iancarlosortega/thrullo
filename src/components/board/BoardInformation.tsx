@@ -86,7 +86,7 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
       ${isBoardInformationOpen ? 'translate-x-0' : 'translate-x-[400px]'}`,
 				'w-[400px] max-w-[80%] h-[calc(100vh-5rem)] flex flex-col fixed top-20 right-0',
 				'transition-transform duration-300 ease-in p-4 z-10',
-				'bg-white px-8 py-4 dark:bg-neutral-900 overflow-y-scroll'
+				'bg-white px-8 py-4 dark:bg-neutral-900 overflow-y-auto'
 			)}>
 			<header className='flex items-center justify-between'>
 				<h3 className='font-semibold text-slate-900 dark:text-secondary-lts'>

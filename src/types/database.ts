@@ -49,6 +49,34 @@ export interface Database {
           }
         ]
       }
+      lists: {
+        Row: {
+          board_id: string
+          created_at: string
+          id: string
+          title: string
+        }
+        Insert: {
+          board_id: string
+          created_at?: string
+          id?: string
+          title: string
+        }
+        Update: {
+          board_id?: string
+          created_at?: string
+          id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lists_board_id_fkey"
+            columns: ["board_id"]
+            referencedRelation: "boards"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       members: {
         Row: {
           board_id: string
