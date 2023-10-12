@@ -49,6 +49,74 @@ export interface Database {
           }
         ]
       }
+      cards: {
+        Row: {
+          cover_url: string | null
+          created_at: string
+          description: string | null
+          id: string
+          list_id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          list_id: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          cover_url?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          list_id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cards_list_id_fkey"
+            columns: ["list_id"]
+            referencedRelation: "lists"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      labels: {
+        Row: {
+          background_color: string
+          card_id: string
+          color: string
+          id: string
+          name: string
+        }
+        Insert: {
+          background_color: string
+          card_id: string
+          color: string
+          id?: string
+          name: string
+        }
+        Update: {
+          background_color?: string
+          card_id?: string
+          color?: string
+          id?: string
+          name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "labels_card_id_fkey"
+            columns: ["card_id"]
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       lists: {
         Row: {
           board_id: string

@@ -65,7 +65,8 @@ export const AddListButton: React.FC<Props> = ({ boardId }) => {
 				} relative transition-all duration-1000`}>
 				<Input
 					isClearable
-					variant='bordered'
+					variant='faded'
+					placeholder='Enter list title'
 					className='w-[300px]'
 					color={errors.title ? 'danger' : undefined}
 					errorMessage={errors.title?.message}
@@ -92,7 +93,8 @@ export const AddListButton: React.FC<Props> = ({ boardId }) => {
 						size='sm'
 						isIconOnly
 						radius='full'
-						color='primary'>
+						color='success'
+						className='text-white'>
 						<AiOutlineCheck />
 					</Button>
 				</div>

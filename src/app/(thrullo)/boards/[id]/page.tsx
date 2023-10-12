@@ -10,16 +10,13 @@ const getBoard = async (id: string): Promise<Board | null> => {
 	const { data, error } = await supabase
 		.from('boards')
 		// TODO: Check this .select('*, owner(*), members(*), lists(*), lists.cards(*)')
-		.select('*, owner(*), lists(*), members(user_id(*))')
+		.select('*, owner(*), members(user_id(*)), lists(*, cards(*, labels(*)))')
 		.eq('id', id);
-	// .order('lists.created_at', { ascending: true });
 
 	if (error) {
 		console.log(error);
 		return null;
 	}
-
-	// Give me sorted lists
 
 	return {
 		...data[0],

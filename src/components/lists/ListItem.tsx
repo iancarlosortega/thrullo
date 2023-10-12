@@ -10,6 +10,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { AiOutlineCheck } from 'react-icons/ai';
 import { ListOptionsButton } from '../buttons/ListOptionsButton';
 import { AddCardButton } from '../buttons/AddCardButton';
+import { ListCards } from '../cards/ListCards';
 import { List } from '@/types';
 
 interface IFormValues {
@@ -119,8 +120,8 @@ export const ListItem: React.FC<Props> = ({ list }) => {
 					/>
 				)}
 			</div>
-			{/* TODO: List of Cards */}
-			<AddCardButton />
+			<ListCards cards={list.cards} listTitle={list.title} />
+			<AddCardButton listId={list.id} />
 		</li>
 	);
 };

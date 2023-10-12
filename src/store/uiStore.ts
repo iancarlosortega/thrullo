@@ -3,11 +3,13 @@ import { create } from 'zustand';
 type State = {
 	theme: string;
 	isBoardInformationOpen: boolean;
+	isLabelMenuOpen: boolean;
 };
 
 type Actions = {
 	setTheme: (theme: string) => void;
 	setIsBoardInformationOpen: (isBoardInformationOpen: boolean) => void;
+	setIsLabelMenuOpen: (isLabelMenuOpen: boolean) => void;
 };
 
 const getInitialTheme = (): string => {
@@ -26,9 +28,11 @@ const getInitialTheme = (): string => {
 const useUIStore = create<State & Actions>()(set => ({
 	theme: getInitialTheme(),
 	isBoardInformationOpen: false,
+	isLabelMenuOpen: false,
 	setTheme: theme => set({ theme }),
 	setIsBoardInformationOpen: isBoardInformationOpen =>
 		set({ isBoardInformationOpen }),
+	setIsLabelMenuOpen: isLabelMenuOpen => set({ isLabelMenuOpen }),
 }));
 
 export default useUIStore;
