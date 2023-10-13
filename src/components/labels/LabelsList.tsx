@@ -6,7 +6,7 @@ interface Props {
 
 export const LabelsList: React.FC<Props> = ({ labels }) => {
 	return (
-		<ul className='flex flex-wrap gap-4 my-2'>
+		<ul className='flex flex-wrap gap-2 my-2'>
 			{labels.map(label => (
 				<li
 					key={label.id}

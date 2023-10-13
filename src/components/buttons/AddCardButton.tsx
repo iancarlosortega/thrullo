@@ -29,7 +29,7 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 
-	const handleAddList = async ({ title }: IFormValues) => {
+	const handleAddCard = async ({ title }: IFormValues) => {
 		const { error } = await supabase.from('cards').insert({
 			title,
 			list_id: listId,
@@ -47,19 +47,19 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 		reset();
 	};
 
-	const handleCancel = () => {
+	const handleClose = () => {
 		setIsCreatingMode(false);
 		reset();
 	};
 
 	const wrapperRef = useRef<HTMLFormElement>(null);
-	useOutsideAlerter(wrapperRef, handleCancel);
+	useOutsideAlerter(wrapperRef, handleClose);
 
 	return (
 		<div className='flex flex-col items-start mt-4'>
 			<form
 				ref={wrapperRef}
-				onSubmit={handleSubmit(handleAddList)}
+				onSubmit={handleSubmit(handleAddCard)}
 				autoComplete='off'
 				className={`${
 					isCreatingMode
@@ -69,8 +69,12 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 				<div
 					className={classNames(
 						'p-4 rounded-xl border shadow-[0px_2px_8px_0px_rgba(0,0,0,0.10)]',
-						'grid place-items-start bg-white',
-						`${errors.title ? 'border-red-300' : 'border-[#E0E0E0]'}`
+						'grid place-items-start bg-white dark:bg-neutral-800',
+						`${
+							errors.title
+								? 'border-red-300'
+								: 'border-[#E0E0E0] dark:border-neutral-700'
+						}`
 					)}>
 					<textarea
 						placeholder='Enter a title for this card...'
@@ -113,7 +117,8 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 				className={classNames(
 					'bg-[#DAE4FD] px-4 py-3 flex justify-between items-center',
 					'rounded-2xl text-primary text-sm w-[300px] font-medium',
-					'hover:bg-[#E1E7FD] transition-all duration-200'
+					'hover:bg-[#E1E7FD] transition-all duration-200',
+					'dark:bg-sky-500/10 dark:border-sky-500/20'
 				)}>
 				Add another card
 				<AiOutlinePlus className='text-2xl' />

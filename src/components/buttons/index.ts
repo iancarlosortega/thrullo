@@ -1,3 +1,4 @@
+export { AddBoardButton } from './AddBoardButton';
 export { AddCardButton } from './AddCardButton';
 export { AddListButton } from './AddListButton';
 export { AddMembersButton } from './AddMembersButton';

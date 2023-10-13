@@ -82,8 +82,6 @@ export const AddNewBoard = ({
 			onOpenChange={onChange}
 			placement='top'
 			classNames={{
-				backdrop:
-					'bg-gradient-to-t from-zinc-300 to-zinc-300/10 backdrop-opacity-20',
 				closeButton:
 					'bg-primary hover:bg-blue-400 transition-colors text-white rounded-lg text-2xl font-bold',
 			}}>

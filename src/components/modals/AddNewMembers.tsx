@@ -128,11 +128,7 @@ export const AddNewMembers = ({
 			backdrop='opaque'
 			isOpen={isOpen}
 			onOpenChange={onChange}
-			placement='top'
-			classNames={{
-				backdrop:
-					'bg-gradient-to-t from-zinc-300 dark:from-zinc-600/50 to-zinc-300/10 dark:to-zinc-600/10 backdrop-opacity-20',
-			}}>
+			placement='top'>
 			<ModalContent>
 				{onClose => (
 					<>

@@ -45,7 +45,9 @@ export const ConfirmDeleteList = ({
 			<ModalContent>
 				{onClose => (
 					<>
-						<ModalHeader className='text-tertiary'>Delete List</ModalHeader>
+						<ModalHeader className='text-tertiary dark:text-secondary-lt'>
+							Delete List
+						</ModalHeader>
 						<form>
 							<ModalBody>
 								<p className='text-sm text-neutral-500'>

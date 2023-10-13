@@ -1,6 +1,7 @@
 import { Noto_Sans } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MembersList } from '..';
 
 const notoSans = Noto_Sans({
 	subsets: ['latin', 'devanagari'],
@@ -25,9 +26,8 @@ export const BoardCardItem: React.FC<Props> = ({ board }) => {
 						className='rounded-lg w-full object-cover aspect-video'
 					/>
 				</div>
-				<p className={notoSans.className}>{board.title}</p>
-				{/* TODO: Add Members */}
-				{/* Members */}
+				<p className={`${notoSans.className} my-3`}>{board.title}</p>
+				<MembersList members={board.members} showAll={false} />
 			</Link>
 		</li>
 	);

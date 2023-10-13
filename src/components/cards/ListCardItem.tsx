@@ -3,9 +3,10 @@
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { useDisclosure } from '@nextui-org/react';
-import { Card } from '@/types';
-import { classNames } from '@/utils';
 import { CardInformation } from '../modals/CardInformation';
+import { LabelsList } from '../labels/LabelsList';
+import { classNames } from '@/utils';
+import { Card } from '@/types';
 
 const notoSans = Noto_Sans({
 	subsets: ['latin', 'latin-ext'],
@@ -27,7 +28,7 @@ export const ListCardItem: React.FC<Props> = ({ card, listTitle }) => {
 				onClick={onOpen}
 				className={classNames(
 					'bg-white rounded-xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.05)]',
-					'p-4 my-4 cursor-pointer font-medium',
+					'p-4 my-4 cursor-pointer font-medium dark:bg-neutral-800',
 					`${notoSans.className}`
 				)}>
 				{cover_url && (
@@ -43,7 +44,7 @@ export const ListCardItem: React.FC<Props> = ({ card, listTitle }) => {
 				)}
 
 				<h5>{card.title}</h5>
-				{/* Labels */}
+				<LabelsList labels={card.labels} />
 				<div>
 					{/* Members */}
 					{/* Comments & Attachments */}

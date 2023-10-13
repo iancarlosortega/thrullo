@@ -42,7 +42,7 @@ export default async function BoardPage({
 			<main
 				className={classNames(
 					'bg-gray-200/50 rounded-2xl py-4 px-8 my-6 h-full min-h-[calc(100vh-13rem)]',
-					'flex items-start overflow-x-auto'
+					'flex items-start overflow-x-auto dark:bg-neutral-900'
 				)}>
 				<Lists lists={board.lists} />
 				<AddListButton boardId={board.id} />

@@ -1,44 +1,42 @@
-'use client';
+import { cookies } from 'next/headers';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { AddBoardButton, BoardList } from '@/components';
+import { Board, Database, User } from '@/types';
 
-import { useEffect, useState } from 'react';
-import { Button, useDisclosure } from '@nextui-org/react';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { AddNewBoard, BoardList } from '@/components';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+const getBoards = async (): Promise<Board[]> => {
+	const supabase = createServerComponentClient<Database>({ cookies });
+	const { data, error } = await supabase
+		.from('boards')
+		.select('*, owner(*), members(user_id(*))');
 
-export default function HomePage() {
-	const [isLoading, setIsLoading] = useState(true);
-	const [boards, setBoards] = useState([]);
-	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-	const supabase = createClientComponentClient();
+	if (error) {
+		console.log(error);
+		return [];
+	}
 
-	useEffect(() => {
-		const fetchPosts = async () => {
-			const { data } = await supabase.from('boards').select();
-			setBoards(data as any);
-			setIsLoading(false);
-		};
+	const mappedData = data.map((board: any) => ({
+		...board,
+		members: [
+			board.owner,
+			...board.members.map((member: User) => member.user_id),
+		],
+	}));
 
-		fetchPosts();
-	}, []);
+	return mappedData as Board[];
+};
+
+export default async function HomePage() {
+	const boards = await getBoards();
 
 	return (
 		<>
 			<div className='flex justify-between my-4'>
 				<h3 className='text-lg font-medium'>All Boards</h3>
-				<Button
-					className='bg-primary text-white'
-					startContent={<AiOutlinePlus />}
-					onPress={onOpen}>
-					Add
-				</Button>
+				<AddBoardButton />
 			</div>
-
 			<section>
 				<BoardList boards={boards} />
 			</section>
-
-			<AddNewBoard isOpen={isOpen} onChange={onOpenChange} onClose={onClose} />
 		</>
 	);
 }

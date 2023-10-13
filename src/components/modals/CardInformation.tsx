@@ -89,8 +89,6 @@ export const CardInformation = ({
 			size='lg'
 			classNames={{
 				base: 'max-w-[90vw] w-[800px] overflow-visible',
-				backdrop:
-					'bg-gradient-to-t from-zinc-300 to-zinc-300/10 backdrop-opacity-20',
 				closeButton:
 					'bg-primary hover:bg-blue-400 transition-colors text-white rounded-lg text-2xl font-bold',
 			}}>
@@ -113,7 +111,10 @@ export const CardInformation = ({
 									<header className='mb-4'>
 										<h3 className='font-medium text-xl'>{title}</h3>
 										<p className='text-secondary text-sm font-semibold'>
-											in list <span className='text-tertiary'>{listTitle}</span>
+											in list{' '}
+											<span className='text-tertiary dark:text-secondary-lt'>
+												{listTitle}
+											</span>
 										</p>
 									</header>
 
@@ -180,21 +181,21 @@ export const CardInformation = ({
 										</p>
 									</div>
 									<Button
-										className='bg-secondary-lts text-secondary font-medium justify-start w-[160px] my-2'
+										className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
 										startContent={<HiUsers />}>
 										Members
 									</Button>
 									<div className='relative'>
 										<Button
 											onPress={() => setIsLabelMenuOpen(true)}
-											className='bg-secondary-lts text-secondary font-medium justify-start w-[160px] my-2'
+											className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
 											startContent={<MdLabel />}>
 											Labels
 										</Button>
 										<LabelsMenu card={card} />
 									</div>
 									<Button
-										className='bg-secondary-lts text-secondary font-medium justify-start w-[160px] my-2'
+										className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
 										startContent={<HiPhotograph />}>
 										Cover
 									</Button>
