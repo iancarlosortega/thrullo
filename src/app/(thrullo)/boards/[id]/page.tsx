@@ -2,15 +2,16 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AddListButton, BoardHeader, Lists } from '@/components';
-import { Board } from '@/types';
 import { classNames } from '@/utils';
+import { Board } from '@/types';
 
 const getBoard = async (id: string): Promise<Board | null> => {
 	const supabase = createServerComponentClient({ cookies });
 	const { data, error } = await supabase
 		.from('boards')
-		// TODO: Check this .select('*, owner(*), members(*), lists(*), lists.cards(*)')
-		.select('*, owner(*), members(user_id(*)), lists(*, cards(*, labels(*)))')
+		.select(
+			'*, owner(*), members(user_id(*)), lists(*, cards(*, labels(*), assigned_users(user_id(*))))'
+		)
 		.eq('id', id);
 
 	if (error) {
@@ -44,7 +45,7 @@ export default async function BoardPage({
 					'bg-gray-200/50 rounded-2xl py-4 px-8 my-6 h-full min-h-[calc(100vh-13rem)]',
 					'flex items-start overflow-x-auto dark:bg-neutral-900'
 				)}>
-				<Lists lists={board.lists} />
+				<Lists lists={board.lists} members={board.members} />
 				<AddListButton boardId={board.id} />
 			</main>
 		</>

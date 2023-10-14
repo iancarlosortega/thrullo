@@ -5,15 +5,12 @@ import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Button, Input } from '@nextui-org/react';
-import { RxCross1 } from 'react-icons/rx';
-import { AiOutlineCheck } from 'react-icons/ai';
 import { ListOptionsButton } from '../buttons/ListOptionsButton';
 import { AddCardButton } from '../buttons/AddCardButton';
 import { ListCards } from '../cards/ListCards';
-import { List } from '@/types';
 import { classNames } from '@/utils';
 import { useOutsideAlerter } from '@/hooks';
+import { List, User } from '@/types';
 
 interface IFormValues {
 	title: string;
@@ -21,9 +18,10 @@ interface IFormValues {
 
 interface Props {
 	list: List;
+	members: User[];
 }
 
-export const ListItem: React.FC<Props> = ({ list }) => {
+export const ListItem: React.FC<Props> = ({ list, members }) => {
 	const [isEdittingMode, setIsEdittingMode] = useState(false);
 	const supabase = createClientComponentClient();
 	const router = useRouter();
@@ -149,7 +147,7 @@ export const ListItem: React.FC<Props> = ({ list }) => {
 					/>
 				)}
 			</div>
-			<ListCards cards={list.cards} listTitle={list.title} />
+			<ListCards cards={list.cards} listTitle={list.title} members={members} />
 			<AddCardButton listId={list.id} />
 		</li>
 	);

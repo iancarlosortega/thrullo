@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AddBoardButton, BoardList } from '@/components';
-import { Board, Database, User } from '@/types';
+import { Board, Database } from '@/types';
 
 const getBoards = async (): Promise<Board[]> => {
 	const supabase = createServerComponentClient<Database>({ cookies });
@@ -18,7 +18,7 @@ const getBoards = async (): Promise<Board[]> => {
 		...board,
 		members: [
 			board.owner,
-			...board.members.map((member: User) => member.user_id),
+			...board.members.map((member: any) => member.user_id),
 		],
 	}));
 

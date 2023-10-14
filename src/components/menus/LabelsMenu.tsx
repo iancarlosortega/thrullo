@@ -31,7 +31,8 @@ const getRandomColor = () => {
 
 export const LabelsMenu: React.FC<Props> = ({ card }) => {
 	const [selectedColor, setSelectedColor] = useState<Color>(getRandomColor());
-	const { isLabelMenuOpen, setIsLabelMenuOpen } = useUIStore();
+	const isLabelMenuOpen = useUIStore(state => state.isLabelMenuOpen);
+	const setIsLabelMenuOpen = useUIStore(state => state.setIsLabelMenuOpen);
 	const {
 		register,
 		handleSubmit,
@@ -71,9 +72,9 @@ export const LabelsMenu: React.FC<Props> = ({ card }) => {
 			ref={wrapperRef}
 			className={classNames(
 				'bg-white rounded-lg border border-[#E0E0E0] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] p-2',
-				'absolute top-[65px] left-0 z-[9999] w-[300px] min-h-[300px] transition-all !duration-300',
+				'absolute top-[65px] left-0 z-10 w-[300px] transition-all !duration-300',
 				'dark:bg-neutral-900 dark:border-[#4F4F4F] dark:shadow-[0px_2px_4px_0px_rgba(0,0,0,0.2)]',
-				`${isLabelMenuOpen ? 'opacity-1 visible' : 'opacity-0 h-0 invisible'}`
+				`${isLabelMenuOpen ? 'opacity-1 visible' : 'opacity-0 invisible'}`
 			)}>
 			<h6 className='font-semibold text-[#4F4F4F] dark:text-secondary-lts'>
 				Label

@@ -6,7 +6,7 @@ import { useDisclosure } from '@nextui-org/react';
 import { CardInformation } from '../modals/CardInformation';
 import { LabelsList } from '../labels/LabelsList';
 import { classNames } from '@/utils';
-import { Card } from '@/types';
+import { Card, User } from '@/types';
 
 const notoSans = Noto_Sans({
 	subsets: ['latin', 'latin-ext'],
@@ -16,9 +16,10 @@ const notoSans = Noto_Sans({
 interface Props {
 	card: Card;
 	listTitle: string;
+	members: User[];
 }
 
-export const ListCardItem: React.FC<Props> = ({ card, listTitle }) => {
+export const ListCardItem: React.FC<Props> = ({ card, listTitle, members }) => {
 	const { title, cover_url } = card;
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
@@ -56,6 +57,7 @@ export const ListCardItem: React.FC<Props> = ({ card, listTitle }) => {
 				onClose={onClose}
 				listTitle={listTitle}
 				card={card}
+				members={members}
 			/>
 		</>
 	);

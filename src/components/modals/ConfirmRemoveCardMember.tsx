@@ -16,25 +16,25 @@ import { Database } from '@/types';
 
 interface Props {
 	memberId: string;
-	boardId: string;
+	cardId: string;
 }
 
-export const ConfirmRemoveMember = ({
+export const ConfirmRemoveCardMember = ({
 	isOpen,
 	onChange,
 	onClose,
 	memberId,
-	boardId,
+	cardId,
 }: UseDisclosureProps & Props) => {
 	const router = useRouter();
 	const supabase = createClientComponentClient<Database>();
 
 	const handleRemoveMember = async () => {
 		const { error } = await supabase
-			.from('members')
+			.from('assigned_users')
 			.delete()
 			.eq('user_id', memberId)
-			.eq('board_id', boardId);
+			.eq('card_id', cardId);
 		if (error) {
 			console.log(error);
 			toast.error(error.message);
