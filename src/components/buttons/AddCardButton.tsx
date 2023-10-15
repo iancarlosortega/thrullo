@@ -30,6 +30,13 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 		formState: { errors, isSubmitting },
 	} = useForm<IFormValues>();
 
+	const handlePressEnter = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			handleSubmit(handleAddCard)(e);
+		}
+	};
+
 	const handleAddCard = async ({ title }: IFormValues) => {
 		const { error } = await supabase.from('cards').insert({
 			title,
@@ -79,6 +86,7 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 								}`
 							)}>
 							<textarea
+								onKeyDown={handlePressEnter}
 								placeholder='Enter a title for this card...'
 								className={classNames(
 									'bg-transparent focus:outline-none w-full resize-none',

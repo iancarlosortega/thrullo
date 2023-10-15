@@ -1,5 +1,6 @@
 export * from './board';
 export * from './buttons';
+export * from './comments';
 export * from './icons';
 export * from './inputs';
 export * from './labels';

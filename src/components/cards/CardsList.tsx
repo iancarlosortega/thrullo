@@ -1,5 +1,5 @@
 import { Card, User } from '@/types';
-import { ListCardItem } from './ListCardItem';
+import { CardsListItem } from './CardsListItem';
 
 interface Props {
 	cards: Card[];
@@ -7,11 +7,11 @@ interface Props {
 	members: User[];
 }
 
-export const ListCards: React.FC<Props> = ({ cards, listTitle, members }) => {
+export const CardsList: React.FC<Props> = ({ cards, listTitle, members }) => {
 	return (
 		<ul>
 			{cards.map(card => (
-				<ListCardItem
+				<CardsListItem
 					card={card}
 					listTitle={listTitle}
 					members={members}

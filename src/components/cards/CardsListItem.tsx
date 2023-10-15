@@ -1,13 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
-import { Button, useDisclosure } from '@nextui-org/react';
-import { AiOutlinePlus } from 'react-icons/ai';
+import { useDisclosure } from '@nextui-org/react';
 import { MembersList } from '../UI/MembersList';
 import { CardInformation } from '../modals/CardInformation';
-import { MembersMenu } from '../menus/MembersMenu';
 import { LabelsList } from '../labels/LabelsList';
 import { classNames } from '@/utils';
 import { Card, User } from '@/types';
@@ -24,7 +21,11 @@ interface Props {
 	members: User[];
 }
 
-export const ListCardItem: React.FC<Props> = ({ card, listTitle, members }) => {
+export const CardsListItem: React.FC<Props> = ({
+	card,
+	listTitle,
+	members,
+}) => {
 	card = {
 		...card,
 		assigned_users: card.assigned_users.map((user: any) => user.user_id),

@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { ListOptionsButton } from '../buttons/ListOptionsButton';
 import { AddCardButton } from '../buttons/AddCardButton';
-import { ListCards } from '../cards/ListCards';
+import { CardsList } from '../cards/CardsList';
 import { classNames } from '@/utils';
 import { useOutsideAlerter } from '@/hooks';
 import { List, User } from '@/types';
@@ -156,7 +156,7 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 					)}
 				</AnimatePresence>
 			</div>
-			<ListCards cards={list.cards} listTitle={list.title} members={members} />
+			<CardsList cards={list.cards} listTitle={list.title} members={members} />
 			<AddCardButton listId={list.id} />
 		</li>
 	);

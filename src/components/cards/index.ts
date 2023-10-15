@@ -1,2 +1,2 @@
-export { ListCardItem } from './ListCardItem';
-export { ListCards } from './ListCards';
+export { CardsListItem } from './CardsListItem';
+export { CardsList } from './CardsList';

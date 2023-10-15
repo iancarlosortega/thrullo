@@ -10,7 +10,7 @@ const getBoard = async (id: string): Promise<Board | null> => {
 	const { data, error } = await supabase
 		.from('boards')
 		.select(
-			'*, owner(*), members(user_id(*)), lists(*, cards(*, labels(*), assigned_users(user_id(*))))'
+			'*, owner(*), members(user_id(*)), lists(*, cards(*, labels(*), assigned_users(user_id(*)), comments(*, user:user_id(*))))'
 		)
 		.eq('id', id);
 

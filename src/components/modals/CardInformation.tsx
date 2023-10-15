@@ -12,14 +12,18 @@ import {
 	UseDisclosureProps,
 	useDisclosure,
 } from '@nextui-org/react';
+import useAuthStore from '@/store/authStore';
 import { HiPhotograph, HiUsers } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
-import { AiOutlineMinus } from 'react-icons/ai';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { IoDocumentTextSharp } from 'react-icons/io5';
 import { ProfilePhoto } from '../UI/ProfilePhoto';
 import { ConfirmRemoveCardMember } from './ConfirmRemoveCardMember';
 import { AddCardLabelsButton } from '../buttons/AddCardLabelsButton';
 import { AddCardMembersButton } from '../buttons/AddCardMembersButton';
 import { UpdateDescriptionInput } from '../inputs/UpdateDescriptionInput';
+import { AddCommentInput } from '../inputs/AddCommentInput';
+import { CommentsList } from '../comments/CommentsList';
 import { Card, Database, User } from '@/types';
 
 interface Props {
@@ -40,6 +44,7 @@ export const CardInformation = ({
 		card;
 
 	const [selectedMember, setSelectedMember] = useState('');
+	const user = useAuthStore(state => state.user);
 
 	const {
 		isOpen: isDeleteMenuOpen,
@@ -95,6 +100,7 @@ export const CardInformation = ({
 
 							<div className='grid gap-6 md:grid-cols-[65%_35%] my-4'>
 								<div>
+									{/* Title */}
 									<header className='mb-4'>
 										<h3 className='font-medium text-xl'>{title}</h3>
 										<p className='text-secondary text-sm font-semibold'>
@@ -105,12 +111,39 @@ export const CardInformation = ({
 										</p>
 									</header>
 
+									{/* Description */}
 									<section>
 										<UpdateDescriptionInput
 											description={description ?? ''}
 											updated_at={updated_at}
 											updateDescription={updateCardDescription}
 										/>
+									</section>
+
+									{/* Attachments */}
+									<section>
+										<div className='flex items-center gap-6'>
+											<div className='flex items-center gap-2'>
+												<IoDocumentTextSharp className='text-secondary-lt font-semibold' />
+												<p className='text-sm text-secondary-lt font-semibold'>
+													Attachments
+												</p>
+											</div>
+											<Button
+												variant='bordered'
+												className='text-secondary'
+												onPress={() => console.log('ADdd attachment')}
+												startContent={<AiOutlinePlus />}>
+												Add
+											</Button>
+										</div>
+										{/* TODO: List of attachments */}
+									</section>
+
+									{/* Comments */}
+									<section className='my-4'>
+										<AddCommentInput cardId={id} user={user!} />
+										<CommentsList comments={card.comments} user={user!} />
 									</section>
 								</div>
 
