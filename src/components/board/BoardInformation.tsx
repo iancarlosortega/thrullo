@@ -1,24 +1,17 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { toast } from 'sonner';
-import {
-	Avatar,
-	Button,
-	Spinner,
-	Textarea,
-	useDisclosure,
-} from '@nextui-org/react';
+import { Avatar, Button, useDisclosure } from '@nextui-org/react';
 import { AiOutlineClose, AiOutlineTeam } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
-import { IoDocumentTextSharp } from 'react-icons/io5';
-import { HiPencil } from 'react-icons/hi';
-import { useDebounce, useOutsideAlerter } from '@/hooks';
 import useUIStore from '@/store/uiStore';
 import { ConfirmRemoveMember } from '@/components/modals/ConfirmRemoveMember';
+import { UpdateDescriptionInput } from '../inputs/UpdateDescriptionInput';
 import { classNames, formatDate } from '@/utils';
+import { useOutsideAlerter } from '@/hooks';
 import { Board, User } from '@/types';
 
 interface Props {
@@ -27,12 +20,6 @@ interface Props {
 }
 
 export const BoardInformation: React.FC<Props> = ({ board, members }) => {
-	const [boardDescription, setBoardDescription] = useState(
-		board.description || ''
-	);
-	const debouncedInputValue = useDebounce(boardDescription, 2000);
-	const [isUpdatingDescription, setIsUpdatingDescription] = useState(false);
-	const [isEdittingMode, setIsEdittingMode] = useState(false);
 	const [memberToRemove, setMemberToRemove] = useState('');
 	const isBoardInformationOpen = useUIStore(
 		state => state.isBoardInformationOpen
@@ -44,7 +31,6 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 	const supabase = createClientComponentClient();
 
 	const closeBoardInformation = () => {
-		if (!isBoardInformationOpen) return;
 		setIsBoardInformationOpen(false);
 	};
 
@@ -56,34 +42,21 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 		onOpen();
 	};
 
-	const handleInputChange = (e: any) => {
-		setIsUpdatingDescription(true);
-		setBoardDescription(e.target.value);
+	const updateBoardDescription = async (description: string) => {
+		const { error } = await supabase
+			.from('boards')
+			.update({
+				description,
+				updated_at: new Date(),
+			})
+			.eq('id', board.id);
+
+		if (error) {
+			console.log(error);
+			toast.error(error.message);
+			return;
+		}
 	};
-
-	useEffect(() => {
-		if (debouncedInputValue === board.description) return;
-
-		const updateBoardDescription = async () => {
-			const { error } = await supabase
-				.from('boards')
-				.update({
-					description: debouncedInputValue,
-					updated_at: new Date(),
-				})
-				.eq('id', board.id);
-
-			if (error) {
-				console.log(error);
-				toast.error(error.message);
-				return;
-			}
-		};
-
-		setIsUpdatingDescription(false);
-
-		updateBoardDescription();
-	}, [debouncedInputValue, board.description, board.id, supabase]);
 
 	return (
 		<AnimatePresence>
@@ -132,47 +105,11 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 					</section>
 
 					<section>
-						<div className='flex items-center gap-6'>
-							<div className='flex items-center gap-2'>
-								<IoDocumentTextSharp className='text-secondary-lt font-semibold' />
-								<p className='text-sm text-secondary-lt font-semibold'>
-									Description
-								</p>
-							</div>
-							<Button
-								variant='bordered'
-								className='text-secondary'
-								onPress={() => setIsEdittingMode(!isEdittingMode)}
-								startContent={<HiPencil />}>
-								Edit
-							</Button>
-						</div>
-						{isEdittingMode ? (
-							<div className='mb-4'>
-								<Textarea
-									placeholder='Enter a board description'
-									value={boardDescription}
-									onChange={handleInputChange}
-								/>
-								<div className='w-full flex justify-end pr-2 pt-2'>
-									{isUpdatingDescription ? (
-										<Spinner
-											size='sm'
-											classNames={{
-												circle1: 'dark:border-b-gray-lts',
-												circle2: 'dark:border-b-gray-lts',
-											}}
-										/>
-									) : (
-										<span className='text-tiny font-semibold text-secondary-lt'>
-											Last update {new Date(board.updated_at).toLocaleString()}
-										</span>
-									)}
-								</div>
-							</div>
-						) : (
-							<p className='mt-4 mb-8'>{boardDescription}</p>
-						)}
+						<UpdateDescriptionInput
+							description={board.description ?? ''}
+							updated_at={board.updated_at}
+							updateDescription={updateBoardDescription}
+						/>
 					</section>
 
 					<section>

@@ -1,0 +1,1 @@
+export { UpdateDescriptionInput } from './UpdateDescriptionInput';

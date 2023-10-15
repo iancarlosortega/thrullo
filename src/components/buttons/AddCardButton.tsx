@@ -49,7 +49,6 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 	};
 
 	const handleClose = () => {
-		console.log('close');
 		setIsCreatingMode(false);
 		reset();
 	};
