@@ -1,12 +1,17 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
-import { useDisclosure } from '@nextui-org/react';
+import { Button, useDisclosure } from '@nextui-org/react';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { MembersList } from '../UI/MembersList';
 import { CardInformation } from '../modals/CardInformation';
+import { MembersMenu } from '../menus/MembersMenu';
 import { LabelsList } from '../labels/LabelsList';
 import { classNames } from '@/utils';
 import { Card, User } from '@/types';
+import { AddCardMembersButton } from '../buttons/AddCardMembersButton';
 
 const notoSans = Noto_Sans({
 	subsets: ['latin', 'latin-ext'],
@@ -20,6 +25,10 @@ interface Props {
 }
 
 export const ListCardItem: React.FC<Props> = ({ card, listTitle, members }) => {
+	card = {
+		...card,
+		assigned_users: card.assigned_users.map((user: any) => user.user_id),
+	};
 	const { title, cover_url } = card;
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
@@ -44,10 +53,20 @@ export const ListCardItem: React.FC<Props> = ({ card, listTitle, members }) => {
 					</div>
 				)}
 
-				<h5>{card.title}</h5>
-				<LabelsList labels={card.labels} />
-				<div>
-					{/* Members */}
+				<h5 className='text-xl'>{card.title}</h5>
+				<div className='my-6'>
+					<LabelsList labels={card.labels} />
+				</div>
+				<div className='my-4'>
+					<div className='flex items-center gap-4'>
+						<MembersList
+							members={card.assigned_users}
+							count={2}
+							showAll={false}
+							showCount={false}
+						/>
+						<AddCardMembersButton card={card} members={members} />
+					</div>
 					{/* Comments & Attachments */}
 				</div>
 			</li>

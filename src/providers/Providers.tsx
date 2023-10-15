@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Providers: React.FC<Props> = ({ children }) => {
-	const { theme } = useUIStore();
+	const theme = useUIStore(state => state.theme);
 
 	useEffect(() => {
 		const root = document.documentElement;

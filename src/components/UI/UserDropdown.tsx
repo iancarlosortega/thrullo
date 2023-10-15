@@ -16,7 +16,7 @@ import { ThemeToggle } from './ThemeToggle';
 import { ProfilePhoto } from './ProfilePhoto';
 
 export const UserDropdown = () => {
-	const { user } = useAuthStore();
+	const user = useAuthStore(state => state.user);
 
 	const router = useRouter();
 	const supabase = createClientComponentClient();

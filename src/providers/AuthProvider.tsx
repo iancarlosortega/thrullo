@@ -11,7 +11,7 @@ interface Props {
 
 export const AuthProvider: React.FC<Props> = ({ children, session }) => {
 	const [isMounted, setIsMounted] = useState(false);
-	const { updateLoginUser } = useAuthStore();
+	const updateLoginUser = useAuthStore(state => state.updateLoginUser);
 
 	useEffect(() => {
 		updateLoginUser({

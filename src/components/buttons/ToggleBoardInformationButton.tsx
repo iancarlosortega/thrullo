@@ -5,7 +5,9 @@ import { Button } from '@nextui-org/react';
 import { BsThreeDots } from 'react-icons/bs';
 
 export const ToggleBoardInformationButton = () => {
-	const { setIsBoardInformationOpen } = useUIStore();
+	const setIsBoardInformationOpen = useUIStore(
+		state => state.setIsBoardInformationOpen
+	);
 
 	return (
 		<Button

@@ -1,8 +1,9 @@
 'use client';
 
-import { Button, useDisclosure } from '@nextui-org/react';
+import { useState } from 'react';
+import { Button } from '@nextui-org/react';
 import { AiOutlinePlus } from 'react-icons/ai';
-import { AddNewMembers } from '@/components/modals/AddNewMembers';
+import { MembersMenu } from '../menus/MembersMenu';
 import { User } from '@/types';
 
 interface Props {
@@ -11,24 +12,27 @@ interface Props {
 }
 
 export const AddMembersButton: React.FC<Props> = ({ boardId, members }) => {
-	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+	const [isMembersMenuOpen, setIsMembersMenuOpen] = useState(false);
+
+	const handleAddMember = async (userId: string) => {
+		console.log('handleAddMember', userId);
+	};
 
 	return (
-		<>
+		<div className='relative'>
 			<Button
 				className='bg-primary text-white border-none'
 				isIconOnly
 				aria-label='Add members'
-				onPress={onOpen}>
+				onPress={() => setIsMembersMenuOpen(true)}>
 				<AiOutlinePlus className='text-2xl' />
 			</Button>
-			<AddNewMembers
-				isOpen={isOpen}
-				onChange={onOpenChange}
-				onClose={onClose}
-				boardId={boardId}
-				members={members}
+			<MembersMenu
+				users={members}
+				isOpen={isMembersMenuOpen}
+				toggleMenu={setIsMembersMenuOpen}
+				handleAction={handleAddMember}
 			/>
-		</>
+		</div>
 	);
 };

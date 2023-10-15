@@ -5,7 +5,8 @@ import { Switch } from '@nextui-org/react';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 
 export const ThemeToggle = () => {
-	const { theme, setTheme } = useUIStore();
+	const theme = useUIStore(state => state.theme);
+	const setTheme = useUIStore(state => state.setTheme);
 
 	const onToggleTheme = () => {
 		const themeSelected = theme === 'light' ? 'dark' : 'light';

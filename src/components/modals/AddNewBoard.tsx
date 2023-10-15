@@ -34,7 +34,7 @@ export const AddNewBoard = ({
 	onClose,
 }: UseDisclosureProps) => {
 	const [isPublic, setisPublic] = useState(false);
-	const { user } = useAuthStore();
+	const user = useAuthStore(state => state.user);
 	const {
 		register,
 		reset,

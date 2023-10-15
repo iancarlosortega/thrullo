@@ -39,7 +39,7 @@ export const AddNewMembers = ({
 }: UseDisclosureProps & Props) => {
 	const [users, setUsers] = useState<User[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
-	const { user } = useAuthStore();
+	const user = useAuthStore(state => state.user);
 	const {
 		register,
 		reset,
