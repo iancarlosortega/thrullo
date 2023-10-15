@@ -16,7 +16,7 @@ export const AddCardLabelsButton: React.FC<Props> = ({ card }) => {
 	return (
 		<div className='relative'>
 			<Button
-				onPress={() => setIsLabelMenuOpen(true)}
+				onPress={() => setIsLabelMenuOpen(!isLabelMenuOpen)}
 				className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
 				startContent={<MdLabel />}>
 				Labels

@@ -22,7 +22,6 @@ export const MembersMenu: React.FC<Props> = ({
 	toggleMenu,
 	handleAction,
 }) => {
-	console.log(users);
 	const [filteredMembers, setFilteredMembers] = useState<User[]>(users);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -48,38 +48,54 @@ export const AddCardMembersButton: React.FC<Props> = ({
 		router.refresh();
 	};
 
+	const getClassNames = () => {
+		switch (variant) {
+			case 'default':
+				return 'bg-primary text-white border-none';
+			case 'secondary':
+				return classNames(
+					'bg-[#DAE4FD] px-4 py-3 flex justify-between items-center rounded-2xl text-primary text-sm w-full font-medium',
+					'dark:bg-sky-500/10 dark:border-sky-500/20 hover:bg-[#E1E7FD] transition-all duration-200'
+				);
+			case 'tertiary':
+				return 'bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2';
+			default:
+				return '';
+		}
+	};
+
+	const getButtonContent = () => {
+		switch (variant) {
+			case 'default':
+				return <AiOutlinePlus className='text-2xl' />;
+			case 'secondary':
+				return (
+					<>
+						Add another list
+						<AiOutlinePlus className='text-2xl' />
+					</>
+				);
+			case 'tertiary':
+				return (
+					<>
+						<HiUsers />
+						Members
+					</>
+				);
+			default:
+				return '';
+		}
+	};
+
 	return (
 		<div className='relative'>
-			{variant === 'default' && (
-				<Button
-					className='bg-primary text-white border-none'
-					isIconOnly
-					aria-label='Add members'
-					onPress={() => setIsMembersMenuOpen(true)}>
-					<AiOutlinePlus className='text-2xl' />
-				</Button>
-			)}
-			{variant === 'secondary' && (
-				<button
-					onClick={() => setIsMembersMenuOpen(true)}
-					className={classNames(
-						'bg-[#DAE4FD] px-4 py-3 flex justify-between items-center',
-						'rounded-2xl text-primary text-sm w-full font-medium',
-						'dark:bg-sky-500/10 dark:border-sky-500/20',
-						'hover:bg-[#E1E7FD] transition-all duration-200'
-					)}>
-					Add another list
-					<AiOutlinePlus className='text-2xl' />
-				</button>
-			)}
-			{variant === 'tertiary' && (
-				<Button
-					onPress={() => setIsMembersMenuOpen(true)}
-					className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
-					startContent={<HiUsers />}>
-					Members
-				</Button>
-			)}
+			<Button
+				className={getClassNames()}
+				isIconOnly={variant === 'default'}
+				aria-label='Add members'
+				onPress={() => setIsMembersMenuOpen(!isMembersMenuOpen)}>
+				{getButtonContent()}
+			</Button>
 
 			<MembersMenu
 				users={filteredMembers}

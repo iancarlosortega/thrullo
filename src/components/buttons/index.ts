@@ -1,4 +1,4 @@
-export { LabelsButton } from './AddCardLabelsButton';
+export { AddCardLabelsButton } from './AddCardLabelsButton';
 export { AddBoardButton } from './AddBoardButton';
 export { AddCardButton } from './AddCardButton';
 export { AddListButton } from './AddListButton';
