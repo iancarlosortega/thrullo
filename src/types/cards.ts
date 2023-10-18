@@ -1,3 +1,4 @@
+import { Attachment } from './attachments';
 import { Comment } from './comments';
 import { Database } from './database';
 import { Label } from './labels';
@@ -11,4 +12,5 @@ export type Card = CardEntity & {
 	labels: Label[];
 	assigned_users: User[];
 	comments: Comment[];
+	attachments: Attachment[];
 };

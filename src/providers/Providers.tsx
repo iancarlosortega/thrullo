@@ -23,7 +23,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
 
 	return (
 		<NextUIProvider>
-			<Toaster richColors position='top-right' />
+			<Toaster richColors expand position='top-right' />
 			{children}
 		</NextUIProvider>
 	);

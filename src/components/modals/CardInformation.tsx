@@ -15,14 +15,15 @@ import {
 import useAuthStore from '@/store/authStore';
 import { HiPhotograph, HiUsers } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { IoDocumentTextSharp } from 'react-icons/io5';
+import { AiOutlineMinus } from 'react-icons/ai';
 import { ProfilePhoto } from '../UI/ProfilePhoto';
 import { ConfirmRemoveCardMember } from './ConfirmRemoveCardMember';
 import { AddCardLabelsButton } from '../buttons/AddCardLabelsButton';
 import { AddCardMembersButton } from '../buttons/AddCardMembersButton';
 import { UpdateDescriptionInput } from '../inputs/UpdateDescriptionInput';
+import { UploadFileInput } from '../inputs/UploadFileInput';
 import { AddCommentInput } from '../inputs/AddCommentInput';
+import { AttachmentsList } from '../attachments/AttachmentsList';
 import { CommentsList } from '../comments/CommentsList';
 import { Card, Database, User } from '@/types';
 
@@ -122,22 +123,17 @@ export const CardInformation = ({
 
 									{/* Attachments */}
 									<section>
-										<div className='flex items-center gap-6'>
-											<div className='flex items-center gap-2'>
-												<IoDocumentTextSharp className='text-secondary-lt font-semibold' />
-												<p className='text-sm text-secondary-lt font-semibold'>
-													Attachments
-												</p>
-											</div>
-											<Button
-												variant='bordered'
-												className='text-secondary'
-												onPress={() => console.log('ADdd attachment')}
-												startContent={<AiOutlinePlus />}>
-												Add
-											</Button>
-										</div>
-										{/* TODO: List of attachments */}
+										<UploadFileInput cardId={id} />
+										{card.attachments.length > 0 ? (
+											<AttachmentsList
+												cardId={id}
+												attachments={card.attachments}
+											/>
+										) : (
+											<p className='text-sm text-gray-400 italic'>
+												No attachments
+											</p>
+										)}
 									</section>
 
 									{/* Comments */}

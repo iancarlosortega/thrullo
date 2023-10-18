@@ -1,4 +1,6 @@
-export type Json =
+Need to install the following packages:
+supabase@1.106.1
+Ok to proceed? (y) export type Json =
   | string
   | number
   | boolean
@@ -39,6 +41,40 @@ export interface Database {
             foreignKeyName: "assigned_users_user_id_fkey"
             columns: ["user_id"]
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      attachments: {
+        Row: {
+          card_id: string
+          created_at: string
+          file_name: string
+          file_type: string
+          file_url: string
+          id: string
+        }
+        Insert: {
+          card_id: string
+          created_at?: string
+          file_name: string
+          file_type: string
+          file_url: string
+          id?: string
+        }
+        Update: {
+          card_id?: string
+          created_at?: string
+          file_name?: string
+          file_type?: string
+          file_url?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attachments_card_id_fkey"
+            columns: ["card_id"]
+            referencedRelation: "cards"
             referencedColumns: ["id"]
           }
         ]

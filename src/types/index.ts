@@ -1,3 +1,4 @@
+export { type Attachment } from './attachments';
 export { type Board } from './boards';
 export { type Card } from './cards';
 export { type Comment } from './comments';
