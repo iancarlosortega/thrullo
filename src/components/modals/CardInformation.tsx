@@ -26,6 +26,7 @@ import { AddCommentInput } from '../inputs/AddCommentInput';
 import { AttachmentsList } from '../attachments/AttachmentsList';
 import { CommentsList } from '../comments/CommentsList';
 import { Card, Database, User } from '@/types';
+import { AddCoverButton } from '../buttons/AddCoverButton';
 
 interface Props {
 	card: Card;
@@ -161,14 +162,8 @@ export const CardInformation = ({
 													variant='tertiary'
 												/>
 											)}
-
 											<AddCardLabelsButton card={card} />
-
-											<Button
-												className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
-												startContent={<HiPhotograph />}>
-												Cover
-											</Button>
+											<AddCoverButton />
 										</div>
 									</section>
 

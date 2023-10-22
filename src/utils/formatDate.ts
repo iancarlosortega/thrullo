@@ -6,5 +6,5 @@ export const formatDate = (date: string) => {
 	};
 	const formatter = new Intl.DateTimeFormat('en-US', options);
 	const formatted = formatter.formatToParts(new Date(date));
-	return `on ${formatted[2].value} ${formatted[0].value}, ${formatted[4].value}`;
+	return `on ${formatted[0].value} ${formatted[2].value}, ${formatted[4].value}`;
 };

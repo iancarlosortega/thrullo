@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const AddMembersButton: React.FC<Props> = ({ boardId, members }) => {
+	// TODO FILTER USERS THAT ARE NOT ALREADY MEMBERS
 	const [isMembersMenuOpen, setIsMembersMenuOpen] = useState(false);
 
 	const handleAddMember = async (userId: string) => {

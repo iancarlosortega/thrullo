@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { Button, useDisclosure } from '@nextui-org/react';
 import { ConfirmDeleteAttachment } from '../modals/ConfirmDeleteAttachment';
 import { Attachment } from '@/types';
+import { formatDate } from '@/utils';
 
 interface Props {
 	attachment: Attachment;
@@ -60,8 +61,7 @@ export const AttachmentsListItem: React.FC<Props> = ({
 					</div>
 					<div>
 						<span className='text-xs text-gray-600 dark:text-gray-400'>
-							{/* TODO: Format this date */}
-							Added {attachment.created_at}
+							Added {formatDate(attachment.created_at)}
 						</span>
 						<p className='font-semibold text-sm'>{attachment.file_name}</p>
 						<div className='flex items-center gap-2 mt-2'>

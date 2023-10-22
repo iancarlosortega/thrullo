@@ -8,7 +8,7 @@ import { useDisclosure } from '@nextui-org/react';
 import { toast } from 'sonner';
 import { ProfilePhoto } from '../UI/ProfilePhoto';
 import { Comment, Database, User } from '@/types';
-import { classNames } from '@/utils';
+import { classNames, formatDate } from '@/utils';
 import { ConfirmDeleteComment } from '../modals/ConfirmDeleteComment';
 
 interface Props {
@@ -76,13 +76,15 @@ export const CommentsListItem: React.FC<Props> = ({ comment, user }) => {
 								<div className='font-semibold'>
 									<p>{comment.user.full_name}</p>
 									<p className='text-xs text-secondary-lt'>
-										{comment.created_at}
+										{new Date(comment.created_at).toLocaleDateString()} at{' '}
+										{new Date(comment.created_at).toLocaleTimeString()}
 									</p>
 								</div>
 							</div>
 							{comment.user.id === user?.id && (
 								<div className='flex items-center gap-2'>
 									<button
+										className='hover:text-secondary-lt transition-all duration-200'
 										onClick={() => {
 											reset();
 											setIsEdittingMode(!isEdittingMode);
@@ -90,7 +92,11 @@ export const CommentsListItem: React.FC<Props> = ({ comment, user }) => {
 										Edit
 									</button>
 									<span>-</span>
-									<button onClick={onOpen}>Delete</button>
+									<button
+										className='hover:text-secondary-lt transition-all duration-200'
+										onClick={onOpen}>
+										Delete
+									</button>
 								</div>
 							)}
 						</div>
@@ -136,8 +142,9 @@ export const CommentsListItem: React.FC<Props> = ({ comment, user }) => {
 												setIsEdittingMode(false);
 											}}
 											className={classNames(
-												'py-2 px-6 bg-tertiary text-white text-sm rounded-xl',
-												'hover:bg-neutral-900 transition-all duration-200'
+												'py-2 px-6 bg-gray-300 text-sm rounded-xl',
+												'hover:bg-gray-200 transition-all duration-200',
+												'dark:bg-tertiary dark:text-white dark:hover:bg-neutral-900'
 											)}>
 											Cancel
 										</button>
