@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import {
 	Modal,
@@ -13,7 +14,7 @@ import {
 	useDisclosure,
 } from '@nextui-org/react';
 import useAuthStore from '@/store/authStore';
-import { HiPhotograph, HiUsers } from 'react-icons/hi';
+import { HiUsers } from 'react-icons/hi';
 import { FaUserCircle } from 'react-icons/fa';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { ProfilePhoto } from '../UI/ProfilePhoto';
@@ -55,6 +56,7 @@ export const CardInformation = ({
 		onClose: onDeleteMenuClose,
 	} = useDisclosure();
 	const supabase = createClientComponentClient<Database>();
+	const router = useRouter();
 
 	const updateCardDescription = async (description: string) => {
 		const { error } = await supabase
@@ -70,6 +72,25 @@ export const CardInformation = ({
 			toast.error(error.message);
 			return;
 		}
+	};
+
+	const updateCardCover = async (coverUrl: string) => {
+		const { error } = await supabase
+			.from('cards')
+			.update({
+				cover_url: coverUrl,
+				updated_at: new Date().toISOString(),
+			})
+			.eq('id', id);
+
+		if (error) {
+			console.log(error);
+			toast.error(error.message);
+			return;
+		}
+
+		toast.success('Cover updated successfully');
+		router.refresh();
 	};
 
 	return (
@@ -93,9 +114,9 @@ export const CardInformation = ({
 									<Image
 										src={cover_url}
 										alt='Cover Image'
-										width={180}
-										height={120}
-										className='w-full h-[120px] rounded-lg aspect-video object-cover'
+										width={750}
+										height={160}
+										className='w-full h-[160px] rounded-lg aspect-video object-cover'
 									/>
 								</div>
 							)}
@@ -163,7 +184,10 @@ export const CardInformation = ({
 												/>
 											)}
 											<AddCardLabelsButton card={card} />
-											<AddCoverButton />
+											<AddCoverButton
+												coverUrl={card.cover_url ?? ''}
+												updateCardCover={updateCardCover}
+											/>
 										</div>
 									</section>
 

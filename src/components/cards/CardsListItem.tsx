@@ -47,14 +47,14 @@ export const CardsListItem: React.FC<Props> = ({
 						<Image
 							src={cover_url}
 							alt={title}
-							width={300}
-							height={200}
+							width={270}
+							height={150}
 							className='rounded-xl aspect-video object-cover'
 						/>
 					</div>
 				)}
 
-				<h5 className='text-xl'>{card.title}</h5>
+				<h5 className='text-xl mt-4'>{card.title}</h5>
 				<div className='my-6'>
 					<LabelsList labels={card.labels} />
 				</div>

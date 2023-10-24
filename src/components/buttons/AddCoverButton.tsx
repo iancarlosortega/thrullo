@@ -5,7 +5,15 @@ import { useState } from 'react';
 import { HiPhotograph } from 'react-icons/hi';
 import { CoverMenu } from '../menus/CoverMenu';
 
-export const AddCoverButton = () => {
+interface Props {
+	coverUrl: string;
+	updateCardCover: (coverUrl: string) => void;
+}
+
+export const AddCoverButton: React.FC<Props> = ({
+	coverUrl,
+	updateCardCover,
+}) => {
 	const [isCoverMenuOpen, setIsCoverMenuOpen] = useState(false);
 
 	return (
@@ -16,7 +24,12 @@ export const AddCoverButton = () => {
 				startContent={<HiPhotograph />}>
 				Cover
 			</Button>
-			<CoverMenu isOpen={isCoverMenuOpen} toggleMenu={setIsCoverMenuOpen} />
+			<CoverMenu
+				coverUrl={coverUrl}
+				isOpen={isCoverMenuOpen}
+				toggleMenu={setIsCoverMenuOpen}
+				updateCardCover={updateCardCover}
+			/>
 		</div>
 	);
 };
