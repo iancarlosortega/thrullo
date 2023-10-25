@@ -17,15 +17,14 @@ import {
 	Textarea,
 } from '@nextui-org/react';
 import { AiFillLock, AiOutlinePlus } from 'react-icons/ai';
-import { HiPhotograph } from 'react-icons/hi';
 import { BiWorld } from 'react-icons/bi';
 import useAuthStore from '@/store/authStore';
 import { Database } from '@/types';
+import { AddCoverButton } from '../buttons/AddCoverButton';
 
 interface IFormValues {
 	title: string;
 	description?: string;
-	coverUrl?: string;
 }
 
 export const AddNewBoard = ({
@@ -34,6 +33,7 @@ export const AddNewBoard = ({
 	onClose,
 }: UseDisclosureProps) => {
 	const [isPublic, setisPublic] = useState(false);
+	const [coverUrl, setCoverUrl] = useState('');
 	const user = useAuthStore(state => state.user);
 	const {
 		register,
@@ -50,7 +50,11 @@ export const AddNewBoard = ({
 		}
 	}, [isOpen, reset]);
 
-	const onSubmit = async ({ title, description, coverUrl }: IFormValues) => {
+	const updateBoardCover = (coverUrl: string) => {
+		setCoverUrl(coverUrl);
+	};
+
+	const onSubmit = async ({ title, description }: IFormValues) => {
 		const { data, error } = await supabase
 			.from('boards')
 			.insert({
@@ -68,9 +72,8 @@ export const AddNewBoard = ({
 		}
 
 		if (data) {
-			toast.success('Board added successfully');
 			reset();
-			onClose!();
+			toast.success('Board added successfully');
 			router.push(`/boards/${data[0].id}`);
 		}
 	};
@@ -82,6 +85,7 @@ export const AddNewBoard = ({
 			onOpenChange={onChange}
 			placement='top'
 			classNames={{
+				base: 'overflow-visible',
 				closeButton:
 					'bg-primary hover:bg-blue-400 transition-colors text-white rounded-lg text-2xl font-bold',
 			}}>
@@ -95,9 +99,9 @@ export const AddNewBoard = ({
 							<ModalBody>
 								<div>
 									<Image
-										src='https://static.vecteezy.com/system/resources/thumbnails/002/292/582/small/elegant-black-and-gold-banner-background-free-vector.jpg'
+										src={coverUrl || '/images/no-banner-image.png'}
 										alt='Cover Image'
-										width={180}
+										width={400}
 										height={120}
 										className='w-full h-[120px] rounded-lg aspect-video object-cover'
 									/>
@@ -130,19 +134,17 @@ export const AddNewBoard = ({
 								/>
 
 								<div className='flex justify-between'>
-									<Button
-										size='lg'
-										className='bg-secondary-lts text-secondary font-medium w-[150px]'
-										startContent={<HiPhotograph />}>
-										Cover
-									</Button>
+									<AddCoverButton
+										coverUrl={''}
+										updateCardCover={updateBoardCover}
+									/>
 									<Button
 										size='lg'
 										className={`${
 											isPublic
 												? 'bg-gradient-to-r from-sky-600 to-sky-500 text-white'
 												: 'bg-secondary-lts text-secondary'
-										} font-medium w-[150px]`}
+										} font-medium w-[150px] dark:bg-neutral-950/50`}
 										startContent={isPublic ? <BiWorld /> : <AiFillLock />}
 										onPress={() => setisPublic(!isPublic)}>
 										{isPublic ? 'Public ' : 'Private'}

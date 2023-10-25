@@ -27,7 +27,9 @@ export default async function RootLayout({
 		<main className='bg-light-gray dark:bg-neutral-800 min-h-screen h-full'>
 			<AuthProvider session={session}>
 				<Header />
-				<section className='container mx-auto py-4'>{children}</section>
+				<section className='container mx-auto py-4 px-4 md:px-0'>
+					{children}
+				</section>
 			</AuthProvider>
 		</main>
 	);

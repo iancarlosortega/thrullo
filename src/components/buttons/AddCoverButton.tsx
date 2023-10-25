@@ -6,21 +6,29 @@ import { HiPhotograph } from 'react-icons/hi';
 import { CoverMenu } from '../menus/CoverMenu';
 
 interface Props {
+	variant?: 'primary' | 'secondary';
 	coverUrl: string;
 	updateCardCover: (coverUrl: string) => void;
 }
 
 export const AddCoverButton: React.FC<Props> = ({
+	variant = 'primary',
 	coverUrl,
 	updateCardCover,
 }) => {
 	const [isCoverMenuOpen, setIsCoverMenuOpen] = useState(false);
 
+	const styles = {
+		primary: 'justify-center w-[150px]',
+		secondary: 'justify-start w-[160px]',
+	};
+
 	return (
 		<div className='relative'>
 			<Button
+				size={variant === 'primary' ? 'lg' : 'md'}
 				onPress={() => setIsCoverMenuOpen(!isCoverMenuOpen)}
-				className='bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2'
+				className={`bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium ${styles[variant]}`}
 				startContent={<HiPhotograph />}>
 				Cover
 			</Button>

@@ -101,31 +101,30 @@ export const CoverMenu: React.FC<Props> = ({
 					<p className='text-sm text-secondary dark:text-secondary-lt mb-2'>
 						Search Unsplash for photos
 					</p>
-					<form autoComplete='off'>
-						<Input
-							type='text'
-							placeholder='Keywords...'
-							value={inputValue}
-							onChange={e => setInputValue(e.target.value)}
-							onKeyDown={e => {
-								if (e.key === 'Enter') {
-									e.preventDefault();
-									updatePhotosList();
-								}
-							}}
-							variant='bordered'
-							endContent={
-								<Button
-									onPress={updatePhotosList}
-									className='translate-x-2'
-									size='sm'
-									isIconOnly
-									color='primary'>
-									<AiOutlineSearch />
-								</Button>
+					<Input
+						autoComplete='off'
+						type='text'
+						placeholder='Keywords...'
+						value={inputValue}
+						onChange={e => setInputValue(e.target.value)}
+						onKeyDown={e => {
+							if (e.key === 'Enter') {
+								e.preventDefault();
+								updatePhotosList();
 							}
-						/>
-					</form>
+						}}
+						variant='bordered'
+						endContent={
+							<Button
+								onPress={updatePhotosList}
+								className='translate-x-2'
+								size='sm'
+								isIconOnly
+								color='primary'>
+								<AiOutlineSearch />
+							</Button>
+						}
+					/>
 					{isLoading ? (
 						<div className='w-full py-8 flex items-center justify-center'>
 							<LoadingSpinner />
@@ -158,7 +157,7 @@ export const CoverMenu: React.FC<Props> = ({
 								updateCardCover(selectedPhoto);
 								handleClose();
 							}}>
-							Update Cover
+							Select Cover
 						</Button>
 					</footer>
 				</motion.div>

@@ -185,6 +185,7 @@ export const CardInformation = ({
 											)}
 											<AddCardLabelsButton card={card} />
 											<AddCoverButton
+												variant='secondary'
 												coverUrl={card.cover_url ?? ''}
 												updateCardCover={updateCardCover}
 											/>

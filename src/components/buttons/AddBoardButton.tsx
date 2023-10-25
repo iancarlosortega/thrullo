@@ -11,7 +11,7 @@ export const AddBoardButton = () => {
 		<>
 			<Button
 				className='bg-primary text-white'
-				startContent={<AiOutlinePlus />}
+				startContent={<AiOutlinePlus className='text-[18px]' />}
 				onPress={onOpen}>
 				Add
 			</Button>
