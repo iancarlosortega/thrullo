@@ -24,7 +24,7 @@ export const MembersList: React.FC<Props> = ({
 	}
 
 	return (
-		<ul className='flex items-center gap-4'>
+		<ul className='flex flex-wrap items-center gap-4'>
 			{filteredMembers.map(member => (
 				<li key={member.id}>
 					<ProfilePhoto user={member} />

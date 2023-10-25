@@ -38,16 +38,16 @@ export default async function BoardPage({
 	if (!board) redirect('/');
 
 	return (
-		<>
+		<div className='flex flex-col gap-6 min-h-[calc(100vh-120px)]'>
 			<BoardHeader board={board!} members={board.members} />
 			<main
 				className={classNames(
-					'bg-gray-200/50 rounded-2xl py-4 px-8 my-6 h-full min-h-[calc(100vh-13rem)]',
+					'bg-gray-200/50 rounded-2xl py-4 px-8 flex-1',
 					'flex items-start overflow-x-auto dark:bg-neutral-900'
 				)}>
 				<Lists lists={board.lists} members={board.members} />
 				<AddListButton boardId={board.id} />
 			</main>
-		</>
+		</div>
 	);
 }

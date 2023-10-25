@@ -121,7 +121,7 @@ export const CardInformation = ({
 								</div>
 							)}
 
-							<div className='grid gap-6 md:grid-cols-[65%_35%] my-4'>
+							<div className='grid gap-2 md:gap-6 md:grid-cols-[65%_35%] my-4'>
 								<div>
 									{/* Title */}
 									<header className='mb-4'>
@@ -159,7 +159,7 @@ export const CardInformation = ({
 									</section>
 
 									{/* Comments */}
-									<section className='my-4'>
+									<section className='mt-4 md:my-4'>
 										<AddCommentInput cardId={id} user={user!} />
 										<CommentsList comments={card.comments} user={user!} />
 									</section>
@@ -167,7 +167,7 @@ export const CardInformation = ({
 
 								{/* Actions */}
 								<aside className='w-[90%]'>
-									<section>
+									<section className='mb-6'>
 										<div className='flex items-center gap-2 '>
 											<FaUserCircle className='text-secondary-lt font-semibold' />
 											<p className='text-sm text-secondary-lt font-semibold'>
@@ -200,10 +200,10 @@ export const CardInformation = ({
 													Members
 												</p>
 											</div>
-											<ul className='my-4'>
+											<ul className='my-6'>
 												{assigned_users.map(member => (
 													<li key={member.id}>
-														<div className='flex items-center justify-between my-2'>
+														<div className='flex items-center justify-between my-4'>
 															<div className='flex items-center gap-2'>
 																<ProfilePhoto user={member} />
 																<p className='text-sm text-secondary dark:text-secondary-lt'>

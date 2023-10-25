@@ -12,13 +12,22 @@ interface Props {
 
 export const BoardHeader: React.FC<Props> = ({ board, members }) => {
 	return (
-		<header className='flex items-center justify-between'>
-			<div className='flex items-center gap-4'>
-				<ToggleBoardVisibility board={board} />
-				<MembersList members={members} />
-				<AddMembersButton boardId={board.id} members={members} />
+		<header className='flex flex-col md:flex-row md:items-center justify-between gap-4'>
+			<div className='flex flex-col md:flex-row md:items-center gap-4'>
+				<div className='grid grid-cols-2 md:grid-cols-1 gap-4'>
+					<ToggleBoardVisibility board={board} />
+					<div className='md:hidden'>
+						<ToggleBoardInformationButton />
+					</div>
+				</div>
+				<div className='flex flex-wrap gap-4'>
+					<MembersList members={members} />
+					<AddMembersButton boardId={board.id} members={members} />
+				</div>
 			</div>
-			<ToggleBoardInformationButton />
+			<div className='hidden md:block'>
+				<ToggleBoardInformationButton />
+			</div>
 			<BoardInformation board={board} members={members} />
 		</header>
 	);

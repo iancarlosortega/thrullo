@@ -11,6 +11,7 @@ export const ToggleBoardInformationButton = () => {
 
 	return (
 		<Button
+			fullWidth
 			className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 font-medium h-12 px-6'
 			onPress={() => setIsBoardInformationOpen(true)}
 			startContent={<BsThreeDots />}>

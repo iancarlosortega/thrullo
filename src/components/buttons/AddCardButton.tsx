@@ -125,7 +125,7 @@ export const AddCardButton: React.FC<Props> = ({ listId }) => {
 				)}
 			</AnimatePresence>
 			<button
-				onClick={() => setIsCreatingMode(true)}
+				onClick={() => setIsCreatingMode(!isCreatingMode)}
 				className={classNames(
 					'bg-[#DAE4FD] px-4 py-3 flex justify-between items-center',
 					'rounded-2xl text-primary text-sm w-[300px] font-medium',
