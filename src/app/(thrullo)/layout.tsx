@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { redirect } from 'next/navigation';
 import { AuthProvider } from '@/providers';
-import { Header } from '@/components';
+import { Header } from '@/components/UI/Header';
 
 const getSession = async () => {
 	const supabase = createServerComponentClient({

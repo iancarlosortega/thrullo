@@ -48,7 +48,7 @@ export const MembersMenu: React.FC<Props> = ({
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}
 					className={classNames(
-						'absolute top-[65px] left-0 z-10 w-[300px]',
+						'absolute top-[65px] left-0 z-20 w-[300px]',
 						'bg-white rounded-lg border border-[#E0E0E0] shadow-[0px_2px_4px_0px_rgba(0,0,0,0.05)] p-2',
 						'dark:bg-neutral-900 dark:border-[#4F4F4F] dark:shadow-[0px_2px_4px_0px_rgba(0,0,0,0.2)]'
 					)}>

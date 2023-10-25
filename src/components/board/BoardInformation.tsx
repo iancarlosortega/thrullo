@@ -8,6 +8,7 @@ import { Avatar, Button, useDisclosure } from '@nextui-org/react';
 import { AiOutlineClose, AiOutlineTeam } from 'react-icons/ai';
 import { FaUserCircle } from 'react-icons/fa';
 import useUIStore from '@/store/uiStore';
+import useAuthStore from '@/store/authStore';
 import { ConfirmRemoveMember } from '@/components/modals/ConfirmRemoveMember';
 import { UpdateDescriptionInput } from '../inputs/UpdateDescriptionInput';
 import { classNames, formatDate } from '@/utils';
@@ -21,6 +22,7 @@ interface Props {
 
 export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 	const [memberToRemove, setMemberToRemove] = useState('');
+	const user = useAuthStore(state => state.user);
 	const isBoardInformationOpen = useUIStore(
 		state => state.isBoardInformationOpen
 	);
@@ -156,6 +158,7 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 										</span>
 									</div>
 									<Button
+										isDisabled={user!.id !== board.owner.id}
 										variant='bordered'
 										color='danger'
 										onPress={() => handleRemoveMember(member.id)}>

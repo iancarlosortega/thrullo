@@ -40,14 +40,14 @@ export default async function BoardPage({
 	return (
 		<div className='flex flex-col gap-6 min-h-[calc(100vh-120px)]'>
 			<BoardHeader board={board!} members={board.members} />
-			<main
+			<section
 				className={classNames(
 					'bg-gray-200/50 rounded-2xl py-4 px-8 flex-1',
 					'flex items-start overflow-x-auto dark:bg-neutral-900'
 				)}>
 				<Lists lists={board.lists} members={board.members} />
 				<AddListButton boardId={board.id} />
-			</main>
+			</section>
 		</div>
 	);
 }

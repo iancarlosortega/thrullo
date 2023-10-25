@@ -22,7 +22,11 @@ export const BoardHeader: React.FC<Props> = ({ board, members }) => {
 				</div>
 				<div className='flex flex-wrap gap-4'>
 					<MembersList members={members} />
-					<AddMembersButton boardId={board.id} members={members} />
+					<AddMembersButton
+						ownerId={board.owner.id}
+						boardId={board.id}
+						members={members}
+					/>
 				</div>
 			</div>
 			<div className='hidden md:block'>
