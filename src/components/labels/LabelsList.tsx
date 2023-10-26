@@ -5,6 +5,8 @@ interface Props {
 }
 
 export const LabelsList: React.FC<Props> = ({ labels }) => {
+	if (!labels || labels.length === 0) return null;
+
 	return (
 		<ul className='flex flex-wrap gap-2 my-2'>
 			{labels.map(label => (

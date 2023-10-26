@@ -138,7 +138,7 @@ export const LoginForm = () => {
 					isSelected={isRememberSelected}
 					onValueChange={setIsRememberSelected}
 					classNames={{
-						label: 'text-sm text-gray-600 translate-x-[-2px]',
+						label: 'text-sm text-gray-400 translate-x-[-2px]',
 						wrapper: 'flex items-center',
 					}}>
 					Remember me
@@ -146,7 +146,7 @@ export const LoginForm = () => {
 
 				<Link
 					href='/auth/forgot-password'
-					className='text-sm underline text-gray-600'>
+					className='text-sm underline text-gray-400'>
 					Forgot password?
 				</Link>
 			</div>

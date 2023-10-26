@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { AddBoardButton, BoardList } from '@/components';
+import { AddBoardButton, BoardCardItem } from '@/components';
 import { Board, Database } from '@/types';
 import { redirect } from 'next/navigation';
 
@@ -44,7 +44,13 @@ const getBoards = async (): Promise<Board[]> => {
 		],
 	}));
 
-	return mappedData as Board[];
+	const sortedData = mappedData.sort((a, b) => {
+		if (a.updated_at > b.updated_at) return -1;
+		if (a.updated_at < b.updated_at) return 1;
+		return 0;
+	});
+
+	return sortedData;
 };
 
 export default async function HomePage() {
@@ -52,12 +58,14 @@ export default async function HomePage() {
 
 	return (
 		<>
-			<div className='flex justify-between my-4'>
-				<h3 className='text-lg font-medium'>All Boards</h3>
+			<header className='flex justify-between my-4'>
+				<h2 className='text-lg font-medium'>All Boards</h2>
 				<AddBoardButton />
-			</div>
-			<section>
-				<BoardList boards={boards} />
+			</header>
+			<section className='flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+				{boards.map(board => (
+					<BoardCardItem key={board.id} board={board} />
+				))}
 			</section>
 		</>
 	);

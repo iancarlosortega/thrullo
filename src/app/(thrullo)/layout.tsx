@@ -3,6 +3,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { redirect } from 'next/navigation';
 import { AuthProvider } from '@/providers';
 import { Header } from '@/components/UI/Header';
+import { classNames } from '@/utils';
 
 const getSession = async () => {
 	const supabase = createServerComponentClient({
@@ -24,11 +25,17 @@ export default async function RootLayout({
 	if (!session) redirect('/auth/login');
 
 	return (
-		<main className='bg-light-gray dark:bg-neutral-800 min-h-screen h-full'>
+		<>
 			<AuthProvider session={session}>
 				<Header />
-				<section className='container mx-auto p-4'>{children}</section>
+				<main
+					className={classNames(
+						'container mx-auto p-4 min-h-[calc(100vh-100px)]',
+						'flex flex-col gap-6'
+					)}>
+					{children}
+				</main>
 			</AuthProvider>
-		</main>
+		</>
 	);
 }

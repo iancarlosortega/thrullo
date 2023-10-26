@@ -58,7 +58,7 @@ export const AddCardMembersButton: React.FC<Props> = ({
 					'dark:bg-sky-500/10 dark:border-sky-500/20 hover:bg-[#E1E7FD] transition-all duration-200'
 				);
 			case 'tertiary':
-				return 'bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px] my-2';
+				return 'bg-secondary-lts text-secondary dark:bg-neutral-950/50 font-medium justify-start w-[160px]';
 			default:
 				return '';
 		}

@@ -57,7 +57,7 @@ export const AddListButton: React.FC<Props> = ({ boardId }) => {
 	useOutsideAlerter(wrapperRef, handleClose);
 
 	return (
-		<div className='flex ml-6 items-start'>
+		<div className='flex items-start'>
 			<AnimatePresence>
 				{isCreatingMode && (
 					<motion.form

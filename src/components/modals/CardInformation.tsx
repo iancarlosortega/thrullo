@@ -21,13 +21,13 @@ import { ProfilePhoto } from '../UI/ProfilePhoto';
 import { ConfirmRemoveCardMember } from './ConfirmRemoveCardMember';
 import { AddCardLabelsButton } from '../buttons/AddCardLabelsButton';
 import { AddCardMembersButton } from '../buttons/AddCardMembersButton';
+import { AddCoverButton } from '../buttons/AddCoverButton';
 import { UpdateDescriptionInput } from '../inputs/UpdateDescriptionInput';
 import { UploadFileInput } from '../inputs/UploadFileInput';
 import { AddCommentInput } from '../inputs/AddCommentInput';
 import { AttachmentsList } from '../attachments/AttachmentsList';
 import { CommentsList } from '../comments/CommentsList';
 import { Card, Database, User } from '@/types';
-import { AddCoverButton } from '../buttons/AddCoverButton';
 
 interface Props {
 	card: Card;
@@ -144,7 +144,7 @@ export const CardInformation = ({
 									</section>
 
 									{/* Attachments */}
-									<section>
+									<section className='mt-3'>
 										<UploadFileInput cardId={id} />
 										{card.attachments.length > 0 ? (
 											<AttachmentsList

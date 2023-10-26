@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { AddListButton, BoardHeader, Lists } from '@/components';
+import { AddListButton, BoardHeader, ListItem } from '@/components';
 import { classNames } from '@/utils';
 import { Board } from '@/types';
 
@@ -38,16 +38,18 @@ export default async function BoardPage({
 	if (!board) redirect('/');
 
 	return (
-		<div className='flex flex-col gap-6 min-h-[calc(100vh-120px)]'>
-			<BoardHeader board={board!} members={board.members} />
+		<>
+			<BoardHeader board={board} members={board.members} />
 			<section
 				className={classNames(
 					'bg-gray-200/50 rounded-2xl py-4 px-8 flex-1',
-					'flex items-start overflow-x-auto dark:bg-neutral-900'
+					'flex gap-6 items-start overflow-x-auto dark:bg-neutral-900'
 				)}>
-				<Lists lists={board.lists} members={board.members} />
+				{board.lists.map(list => (
+					<ListItem list={list} key={list.id} members={board.members} />
+				))}
 				<AddListButton boardId={board.id} />
 			</section>
-		</div>
+		</>
 	);
 }

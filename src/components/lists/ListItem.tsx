@@ -8,10 +8,10 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { ListOptionsButton } from '../buttons/ListOptionsButton';
 import { AddCardButton } from '../buttons/AddCardButton';
-import { CardsList } from '../cards/CardsList';
-import { classNames } from '@/utils';
+import { CardsListItem } from '../cards';
 import { useOutsideAlerter } from '@/hooks';
 import { List, User } from '@/types';
+import { classNames } from '@/utils';
 
 interface IFormValues {
 	title: string;
@@ -70,8 +70,8 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 	useOutsideAlerter(wrapperRef, handleClose);
 
 	return (
-		<li className='w-[300px]' key={list.id}>
-			<div className='flex items-center justify-between'>
+		<aside className='w-[300px]'>
+			<header className='flex items-center justify-between'>
 				<AnimatePresence>
 					{isEdittingMode ? (
 						<motion.form
@@ -147,7 +147,7 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 							exit={{ opacity: 0 }}
 							transition={{ duration: 0.5 }}
 							className='w-full flex items-center justify-between'>
-							<h3 className='text-lg font-medium'>{list.title}</h3>
+							<h2 className='text-lg font-medium'>{list.title}</h2>
 							<ListOptionsButton
 								list={list}
 								toggleEditListTitle={toggleEditListTitle}
@@ -155,9 +155,16 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 						</motion.div>
 					)}
 				</AnimatePresence>
-			</div>
-			<CardsList cards={list.cards} listTitle={list.title} members={members} />
+			</header>
+			{list.cards.map(card => (
+				<CardsListItem
+					card={card}
+					listTitle={list.title}
+					members={members}
+					key={card.id}
+				/>
+			))}
 			<AddCardButton listId={list.id} />
-		</li>
+		</aside>
 	);
 };

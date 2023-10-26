@@ -82,12 +82,12 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 						</button>
 					</header>
 					<hr className='my-4' />
-					<section>
+					<section className='mb-4'>
 						<div className='flex items-center gap-2 '>
 							<FaUserCircle className='text-secondary-lt font-semibold' />
 							<p className='text-sm text-secondary-lt font-semibold'>Made by</p>
 						</div>
-						<div className='flex gap-2 items-center my-4'>
+						<div className='flex gap-2 items-center mt-2'>
 							<Avatar
 								radius='sm'
 								alt={board.owner.full_name}
@@ -106,21 +106,22 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 						</div>
 					</section>
 
-					<section>
+					<section className='mb-4'>
 						<UpdateDescriptionInput
+							ownerId={board.owner.id}
 							description={board.description ?? ''}
 							updated_at={board.updated_at}
 							updateDescription={updateBoardDescription}
 						/>
 					</section>
 
-					<section>
+					<section className='mb-2'>
 						<div className='flex items-center gap-2'>
 							<AiOutlineTeam className='text-secondary-lt font-semibold' />
 							<p className='text-sm text-secondary-lt font-semibold'>Team</p>
 						</div>
-						<ul>
-							<li className='flex items-center justify-between my-4'>
+						<ul className='mt-2'>
+							<li className='flex items-center justify-between mt-2'>
 								<div className='flex gap-2 items-center'>
 									<Avatar
 										radius='sm'

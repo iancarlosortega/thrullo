@@ -47,7 +47,7 @@ export const Header = () => {
 			<div className='flex items-center'>
 				<Logo />
 				{!isPathHome && (
-					<div className='hidden xl:flex ml-36 items-center'>
+					<div className='hidden xl:flex ml-16 2xl:ml-36 items-center'>
 						<h4 className='font-medium text-lg text-tertiary dark:text-gray-400 px-6 border-r border-[#E0E0E0] dark:border-gray-400'>
 							{boardName}
 						</h4>
@@ -61,7 +61,7 @@ export const Header = () => {
 				)}
 			</div>
 
-			<div className='flex items-center gap-6 lg:gap-12'>
+			<div className='flex items-center gap-2 lg:gap-12'>
 				<form autoComplete='off' className='relative hidden md:flex	'>
 					<Input
 						size='lg'

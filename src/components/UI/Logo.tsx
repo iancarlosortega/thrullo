@@ -1,8 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const Logo = () => {
 	return (
-		<div className='flex items-center gap-2'>
+		<Link href='/' className='flex items-center gap-2'>
 			<Image
 				src='/images/logo-small.svg'
 				alt='Logo'
@@ -13,6 +14,6 @@ export const Logo = () => {
 			<h1 className='hidden md:block font-bold text-2xl text-dark dark:text-white'>
 				Thrullo
 			</h1>
-		</div>
+		</Link>
 	);
 };

@@ -97,7 +97,7 @@ export const AddNewBoard = ({
 							autoComplete='off'
 							className='my-4'>
 							<ModalBody>
-								<div>
+								<header>
 									<Image
 										src={coverUrl || '/images/no-banner-image.png'}
 										alt='Cover Image'
@@ -105,7 +105,7 @@ export const AddNewBoard = ({
 										height={120}
 										className='w-full h-[120px] rounded-lg aspect-video object-cover'
 									/>
-								</div>
+								</header>
 								<Input
 									autoFocus
 									type='text'

@@ -2,6 +2,7 @@ import { Noto_Sans } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MembersList } from '..';
+import { Board } from '@/types';
 
 const notoSans = Noto_Sans({
 	subsets: ['latin', 'devanagari'],
@@ -10,13 +11,13 @@ const notoSans = Noto_Sans({
 });
 
 interface Props {
-	board: any;
+	board: Board;
 }
 
 export const BoardCardItem: React.FC<Props> = ({ board }) => {
 	return (
-		<li className='rounded-lg bg-white dark:bg-stone-900 shadow-lg text-lg p-4'>
-			<Link className='' href={`/boards/${board.id}`}>
+		<article className='rounded-lg bg-white dark:bg-stone-900 shadow-lg text-lg p-4'>
+			<Link href={`/boards/${board.id}`}>
 				<div className='mb-2'>
 					<Image
 						src={board.cover_url || '/images/no-banner-image.png'}
@@ -26,9 +27,9 @@ export const BoardCardItem: React.FC<Props> = ({ board }) => {
 						className='rounded-lg w-full object-cover aspect-video'
 					/>
 				</div>
-				<p className={`${notoSans.className} my-3`}>{board.title}</p>
+				<h3 className={`${notoSans.className} my-3`}>{board.title}</h3>
 				<MembersList members={board.members} showAll={false} />
 			</Link>
-		</li>
+		</article>
 	);
 };
