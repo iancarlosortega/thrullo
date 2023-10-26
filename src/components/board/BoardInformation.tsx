@@ -108,7 +108,7 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 
 					<section className='mb-4'>
 						<UpdateDescriptionInput
-							ownerId={board.owner.id}
+							canEdit={user?.id === board.owner.id}
 							description={board.description ?? ''}
 							updated_at={board.updated_at}
 							updateDescription={updateBoardDescription}

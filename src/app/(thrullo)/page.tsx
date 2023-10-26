@@ -4,6 +4,8 @@ import { AddBoardButton, BoardCardItem } from '@/components';
 import { Board, Database } from '@/types';
 import { redirect } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 const getBoards = async (): Promise<Board[]> => {
 	const supabase = createServerComponentClient<Database>({ cookies });
 	const {
@@ -62,7 +64,7 @@ export default async function HomePage() {
 				<h2 className='text-lg font-medium'>All Boards</h2>
 				<AddBoardButton />
 			</header>
-			<section className='flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+			<section className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
 				{boards.map(board => (
 					<BoardCardItem key={board.id} board={board} />
 				))}

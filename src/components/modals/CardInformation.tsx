@@ -137,6 +137,7 @@ export const CardInformation = ({
 									{/* Description */}
 									<section>
 										<UpdateDescriptionInput
+											canEdit={true}
 											description={description ?? ''}
 											updated_at={updated_at}
 											updateDescription={updateCardDescription}

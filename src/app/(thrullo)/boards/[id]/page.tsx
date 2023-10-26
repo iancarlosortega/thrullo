@@ -4,6 +4,22 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AddListButton, BoardHeader, ListItem } from '@/components';
 import { classNames } from '@/utils';
 import { Board } from '@/types';
+import { Metadata } from 'next/types';
+
+export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({
+	params,
+}: {
+	params: { id: string };
+}): Promise<Metadata> {
+	const id = params.id;
+	const board = await getBoard(id);
+	return {
+		title: `${board?.title ?? 'Board'} | Thrullo`,
+		description: 'A Trello clone built with Next.js and Supabase.',
+	};
+}
 
 const getBoard = async (id: string): Promise<Board | null> => {
 	const supabase = createServerComponentClient({ cookies });

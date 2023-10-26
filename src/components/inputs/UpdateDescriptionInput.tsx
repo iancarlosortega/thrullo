@@ -1,21 +1,20 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useAuthStore from '@/store/authStore';
 import { Textarea, Spinner, Button } from '@nextui-org/react';
 import { HiPencil } from 'react-icons/hi';
 import { IoDocumentTextSharp } from 'react-icons/io5';
 import { useDebounce } from '@/hooks';
 
 interface Props {
-	ownerId?: string;
 	description: string;
+	canEdit?: boolean;
 	updated_at: string;
 	updateDescription: (description: string) => Promise<void>;
 }
 
 export const UpdateDescriptionInput: React.FC<Props> = ({
-	ownerId,
+	canEdit = true,
 	description,
 	updated_at,
 	updateDescription,
@@ -29,8 +28,6 @@ export const UpdateDescriptionInput: React.FC<Props> = ({
 	const debouncedInputValue = useDebounce(updatedDescription, 1200);
 	const [isUpdatingDescription, setIsUpdatingDescription] = useState(false);
 	const [isEdittingMode, setIsEdittingMode] = useState(false);
-
-	const user = useAuthStore(state => state.user);
 
 	useEffect(() => {
 		if (debouncedInputValue === description) return;
@@ -58,17 +55,16 @@ export const UpdateDescriptionInput: React.FC<Props> = ({
 						Description
 					</p>
 				</div>
-				{ownerId === user?.id ||
-					(!ownerId && (
-						<Button
-							variant='bordered'
-							className='text-secondary'
-							isDisabled={isUpdatingDescription}
-							onPress={() => setIsEdittingMode(!isEdittingMode)}
-							startContent={<HiPencil />}>
-							Edit
-						</Button>
-					))}
+				{canEdit && (
+					<Button
+						variant='bordered'
+						className='text-secondary'
+						isDisabled={isUpdatingDescription}
+						onPress={() => setIsEdittingMode(!isEdittingMode)}
+						startContent={<HiPencil />}>
+						Edit
+					</Button>
+				)}
 			</div>
 			{isEdittingMode ? (
 				<div className='mb-4'>
