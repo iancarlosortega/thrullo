@@ -1,10 +1,10 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { Metadata } from 'next/types';
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AddListButton, BoardHeader, ListItem } from '@/components';
 import { classNames } from '@/utils';
 import { Board } from '@/types';
-import { Metadata } from 'next/types';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,9 +37,14 @@ const getBoard = async (id: string): Promise<Board | null> => {
 
 	return {
 		...data[0],
-		lists: data[0].lists.sort((a: any, b: any) =>
-			a.created_at > b.created_at ? 1 : -1
-		),
+		lists: data[0].lists
+			.sort((a: any, b: any) => (a.created_at > b.created_at ? 1 : -1))
+			.map((list: any) => ({
+				...list,
+				cards: list.cards.sort((a: any, b: any) =>
+					a.updated_at > b.updated_at ? 1 : -1
+				),
+			})),
 		members: data[0].members.map((member: any) => member.user_id),
 	};
 };

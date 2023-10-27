@@ -82,6 +82,7 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 			.from('cards')
 			.update({
 				list_id: list.id,
+				updated_at: new Date(),
 			})
 			.match({ id: card.id });
 
