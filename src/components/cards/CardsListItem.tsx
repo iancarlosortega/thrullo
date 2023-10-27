@@ -1,11 +1,13 @@
 'use client';
 
+import { useRef } from 'react';
 import Image from 'next/image';
 import { Noto_Sans } from 'next/font/google';
 import { useDisclosure } from '@nextui-org/react';
 import { MdOutlineInsertComment } from 'react-icons/md';
 import { CgAttachment } from 'react-icons/cg';
 import { MembersList } from '../UI/MembersList';
+import useUIStore from '@/store/uiStore';
 import { CardInformation } from '../modals/CardInformation';
 import { LabelsList } from '../labels/LabelsList';
 import { AddCardMembersButton } from '../buttons/AddCardMembersButton';
@@ -33,11 +35,31 @@ export const CardsListItem: React.FC<Props> = ({
 		assigned_users: card.assigned_users.map((user: any) => user.user_id),
 	};
 	const { title, cover_url } = card;
+	const ref = useRef<HTMLDivElement>(null);
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+	const setIsDragging = useUIStore(state => state.setIsDragging);
+	const setCurrentCardHeight = useUIStore(state => state.setCurrentCardHeight);
+
+	const onDragStart = (event: React.DragEvent<HTMLDivElement>) => {
+		setIsDragging(true);
+		setCurrentCardHeight(ref.current?.offsetHeight || 0);
+		event.dataTransfer.setData('card', JSON.stringify(card));
+		event.dataTransfer.setData('listTitle', listTitle);
+	};
+
+	const onDragEnd = (event: React.DragEvent<HTMLDivElement>) => {
+		setIsDragging(false);
+		event.dataTransfer.clearData();
+	};
 
 	return (
 		<>
 			<article
+				ref={ref}
+				draggable
+				onDragStart={onDragStart}
+				onDragEnd={onDragEnd}
 				onClick={onOpen}
 				className={classNames(
 					'bg-white rounded-xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.05)]',
@@ -48,6 +70,7 @@ export const CardsListItem: React.FC<Props> = ({
 					{cover_url && (
 						<div className='mb-4'>
 							<Image
+								draggable={false}
 								src={cover_url}
 								alt={title}
 								width={270}

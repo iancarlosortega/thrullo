@@ -6,6 +6,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import useUIStore from '@/store/uiStore';
 import { ListOptionsButton } from '../buttons/ListOptionsButton';
 import { AddCardButton } from '../buttons/AddCardButton';
 import { CardsListItem } from '../cards';
@@ -24,6 +25,8 @@ interface Props {
 
 export const ListItem: React.FC<Props> = ({ list, members }) => {
 	const [isEdittingMode, setIsEdittingMode] = useState(false);
+	const isDragging = useUIStore(state => state.isDragging);
+	const currentCardHeight = useUIStore(state => state.currentCardHeight);
 	const supabase = createClientComponentClient();
 	const router = useRouter();
 	const {
@@ -66,11 +69,35 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 		reset();
 	};
 
+	const handleDrop = async (event: React.DragEvent<HTMLElement>) => {
+		event.preventDefault();
+		const card = JSON.parse(event.dataTransfer.getData('card'));
+		const listTitle = event.dataTransfer.getData('listTitle');
+
+		if (listTitle === list.title) {
+			return;
+		}
+
+		const { error } = await supabase
+			.from('cards')
+			.update({
+				list_id: list.id,
+			})
+			.match({ id: card.id });
+
+		if (error) {
+			console.error(error);
+			toast.error(error.message);
+			return;
+		}
+		router.refresh();
+	};
+
 	const wrapperRef = useRef<HTMLFormElement>(null);
 	useOutsideAlerter(wrapperRef, handleClose);
 
 	return (
-		<aside className='w-[300px]'>
+		<aside className='w-[300px] flex-1'>
 			<header className='flex items-center justify-between'>
 				<AnimatePresence>
 					{isEdittingMode ? (
@@ -164,6 +191,24 @@ export const ListItem: React.FC<Props> = ({ list, members }) => {
 					key={card.id}
 				/>
 			))}
+			<AnimatePresence>
+				{isDragging && (
+					<motion.div
+						onDrop={handleDrop}
+						onDragOver={event => event.preventDefault()}
+						initial={{ opacity: 0, height: 0 }}
+						animate={{
+							opacity: isDragging ? 1 : 0,
+							height: isDragging ? currentCardHeight : 0,
+						}}
+						exit={{ opacity: 0, height: 0 }}
+						transition={{ duration: 0.2 }}
+						className={classNames(
+							'w-full my-4 bg-[#E2E8F6] rounded-xl shadow-[0px_4px_12px_0px_rgba(0,0,0,0.05)]',
+							'border border-dashed border-[#2F80ED]'
+						)}></motion.div>
+				)}
+			</AnimatePresence>
 			<AddCardButton listId={list.id} />
 		</aside>
 	);

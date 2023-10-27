@@ -22,8 +22,8 @@ export const BoardCardItem: React.FC<Props> = ({ board }) => {
 					<Image
 						src={board.cover_url || '/images/no-banner-image.png'}
 						alt='board cover'
-						width={200}
-						height={200}
+						width={720}
+						height={720}
 						className='rounded-lg w-full object-cover aspect-video'
 					/>
 				</div>

@@ -59,7 +59,7 @@ export default async function BoardPage({
 			<section
 				className={classNames(
 					'bg-gray-200/50 rounded-2xl py-4 px-8 flex-1',
-					'flex gap-6 items-start overflow-x-auto dark:bg-neutral-900'
+					'flex gap-6 overflow-x-auto dark:bg-neutral-900'
 				)}>
 				{board.lists.map(list => (
 					<ListItem list={list} key={list.id} members={board.members} />
