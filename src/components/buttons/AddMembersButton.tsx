@@ -64,10 +64,11 @@ export const AddMembersButton: React.FC<Props> = ({
 		router.refresh();
 		setIsMembersMenuOpen(false);
 	};
+
+	if (ownerId !== user?.id) return null;
 	return (
 		<div className='relative'>
 			<Button
-				isDisabled={ownerId !== user?.id}
 				className='bg-primary text-white border-none'
 				isIconOnly
 				aria-label='Add members'

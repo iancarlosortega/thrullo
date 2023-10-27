@@ -158,13 +158,14 @@ export const BoardInformation: React.FC<Props> = ({ board, members }) => {
 											{member.full_name}
 										</span>
 									</div>
-									<Button
-										isDisabled={user!.id !== board.owner.id}
-										variant='bordered'
-										color='danger'
-										onPress={() => handleRemoveMember(member.id)}>
-										Remove
-									</Button>
+									{user!.id === board.owner.id && (
+										<Button
+											variant='bordered'
+											color='danger'
+											onPress={() => handleRemoveMember(member.id)}>
+											Remove
+										</Button>
+									)}
 								</li>
 							))}
 						</ul>

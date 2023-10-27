@@ -48,7 +48,7 @@ export const Header = () => {
 				<Logo />
 				{!isPathHome && (
 					<div className='hidden xl:flex ml-16 2xl:ml-36 items-center'>
-						<h4 className='font-medium text-lg text-tertiary dark:text-gray-400 px-6 border-r border-[#E0E0E0] dark:border-gray-400'>
+						<h4 className='font-medium text-lg text-tertiary dark:text-gray-200 px-6 border-r border-[#E0E0E0] dark:border-gray-400'>
 							{boardName}
 						</h4>
 						<Link
