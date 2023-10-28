@@ -17,7 +17,7 @@ const getBoards = async (): Promise<Board[]> => {
 	const { data: ownerData, error: ownerError } = await supabase
 		.from('boards')
 		.select('*, owner(*), members(user_id(*))')
-		.eq('owner', session.user.id);
+		.or(`owner.eq.${session.user.id},is_public.eq.true`);
 
 	if (ownerError) {
 		console.log(ownerError);

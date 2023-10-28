@@ -145,7 +145,7 @@ export const CardInformation = ({
 								<div>
 									<header className='mb-4'>
 										<UpdateTitleInput
-											title={card.title}
+											title={title}
 											onSubmit={updateCardTitle}
 											canEdit
 											fullWidth

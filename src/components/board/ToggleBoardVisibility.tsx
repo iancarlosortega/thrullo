@@ -12,6 +12,7 @@ import {
 } from '@nextui-org/react';
 import { AiFillLock, AiOutlineCheck } from 'react-icons/ai';
 import { BiWorld } from 'react-icons/bi';
+import useAuthStore from '@/store/authStore';
 import { Board, Database } from '@/types';
 
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 
 export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 	const [isPublic, setIsPublic] = useState(board.is_public);
+	const user = useAuthStore(state => state.user);
 	const supabase = createClientComponentClient<Database>();
 
 	const handleToggleVisibility = async (value: boolean) => {
@@ -39,15 +41,18 @@ export const ToggleBoardVisibility: React.FC<Props> = ({ board }) => {
 	};
 
 	return (
-		<Dropdown placement='bottom-start'>
-			<DropdownTrigger>
+		<Dropdown placement='bottom-start' isDisabled>
+			<DropdownTrigger disabled={board.owner.id !== user?.id}>
 				<Button
 					className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 font-medium h-12 px-6'
 					startContent={isPublic ? <BiWorld /> : <AiFillLock />}>
 					{isPublic ? 'Public ' : 'Private'}
 				</Button>
 			</DropdownTrigger>
-			<DropdownMenu aria-label='Single selection example' variant='flat'>
+			<DropdownMenu
+				aria-label='Toggle board visibility'
+				variant='flat'
+				disabledKeys={board.owner.id !== user?.id ? ['public', 'private'] : []}>
 				<DropdownItem>
 					<span className='font-semibold text-neutral-800 block dark:text-white'>
 						Visibility
