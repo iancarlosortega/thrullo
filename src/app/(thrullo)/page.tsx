@@ -34,7 +34,11 @@ const getBoards = async (): Promise<Board[]> => {
 		return [];
 	}
 
-	const membersBoards = membersData.map((member: any) => member.board_id);
+	const membersBoards = membersData
+		.filter((member: any) =>
+			ownerData.find(board => board.id === member.board_id)
+		)
+		.map((member: any) => member.board_id);
 
 	const allBoards = [...ownerData, ...membersBoards];
 
