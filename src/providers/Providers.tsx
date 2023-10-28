@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 import { NextUIProvider } from '@nextui-org/react';
 import useUIStore from '@/store/uiStore';
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export const Providers: React.FC<Props> = ({ children }) => {
+	const [isMounted, setIsMounted] = useState(false);
 	const theme = useUIStore(state => state.theme);
 
 	useEffect(() => {
@@ -19,7 +20,10 @@ export const Providers: React.FC<Props> = ({ children }) => {
 		} else {
 			root.classList.add('dark');
 		}
+		setIsMounted(true);
 	}, [theme]);
+
+	if (!isMounted) return null;
 
 	return (
 		<NextUIProvider>

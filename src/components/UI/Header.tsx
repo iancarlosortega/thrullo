@@ -1,20 +1,26 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Button, Input } from '@nextui-org/react';
 import { LuLayoutDashboard } from 'react-icons/lu';
+import useAuthStore from '@/store/authStore';
 import { UserDropdown } from '@/components/UI/UserDropdown';
+import { UpdateTitleInput } from '../inputs/UpdateTitleInput';
 import { Logo } from './Logo';
 import { classNames } from '@/utils';
+import { toast } from 'sonner';
+import { Board } from '@/types';
 
 export const Header = () => {
 	const [isPathHome, setIsPathHome] = useState(false);
-	const [boardName, setBoardName] = useState('');
+	const [board, setBoard] = useState<Board | null>(null);
+	const user = useAuthStore(state => state.user);
 	const pathName = usePathname();
 	const supabase = createClientComponentClient();
+	const router = useRouter();
 
 	useEffect(() => {
 		const fetchBoardName = async () => {
@@ -24,19 +30,38 @@ export const Header = () => {
 				const boardId = pathName.split('/')[2];
 				const { data, error } = await supabase
 					.from('boards')
-					.select('title')
+					.select('*')
 					.eq('id', boardId);
 
 				if (error) {
 					console.log(error);
 					return;
 				}
-				setBoardName(data[0].title);
+				setBoard(data[0]);
 				setIsPathHome(false);
 			}
 		};
 		fetchBoardName();
 	}, [pathName, supabase]);
+
+	const handleUpdateBoardTitle = async (title: string) => {
+		if (title === board?.title) return;
+
+		const { error } = await supabase
+			.from('boards')
+			.update({
+				title,
+			})
+			.eq('id', board!.id);
+
+		if (error) {
+			console.error(error);
+			toast.error(error.message);
+			return;
+		}
+
+		router.refresh();
+	};
 
 	return (
 		<header
@@ -46,14 +71,20 @@ export const Header = () => {
 			)}>
 			<div className='flex items-center'>
 				<Logo />
-				{!isPathHome && (
-					<div className='hidden xl:flex ml-16 2xl:ml-36 items-center'>
-						<h4 className='font-medium text-lg text-tertiary dark:text-gray-200 px-6 border-r border-[#E0E0E0] dark:border-gray-400'>
-							{boardName}
-						</h4>
+				{!isPathHome && board?.title && (
+					<div className='hidden xl:flex ml-16 2xl:ml-36 gap-6 items-center'>
+						<UpdateTitleInput
+							title={board.title}
+							canEdit={user?.id === board.owner}
+							onSubmit={handleUpdateBoardTitle}
+						/>
+						<div className='h-10 w-1 border-l border-gray-600/50'></div>
 						<Link
 							href='/'
-							className='bg-secondary-lts text-secondary dark:bg-neutral-900/50 rounded-lg font-medium h-12 ml-6 px-6 flex justify-center items-center gap-4'>
+							className={classNames(
+								'bg-secondary-lts text-secondary dark:bg-neutral-900/50 rounded-lg font-medium',
+								'h-12 px-6 flex justify-center items-center gap-4'
+							)}>
 							<LuLayoutDashboard />
 							All Boards
 						</Link>

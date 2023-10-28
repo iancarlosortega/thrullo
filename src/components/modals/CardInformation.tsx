@@ -28,6 +28,7 @@ import { AddCommentInput } from '../inputs/AddCommentInput';
 import { AttachmentsList } from '../attachments/AttachmentsList';
 import { CommentsList } from '../comments/CommentsList';
 import { Card, Database, User } from '@/types';
+import { UpdateTitleInput } from '../inputs/UpdateTitleInput';
 
 interface Props {
 	card: Card;
@@ -57,6 +58,25 @@ export const CardInformation = ({
 	} = useDisclosure();
 	const supabase = createClientComponentClient<Database>();
 	const router = useRouter();
+
+	const updateCardTitle = async (title: string) => {
+		if (title === card.title) return;
+
+		const { error } = await supabase
+			.from('cards')
+			.update({
+				title,
+			})
+			.eq('id', card.id);
+
+		if (error) {
+			console.error(error);
+			toast.error(error.message);
+			return;
+		}
+
+		router.refresh();
+	};
 
 	const updateCardDescription = async (description: string) => {
 		const { error } = await supabase
@@ -123,10 +143,14 @@ export const CardInformation = ({
 
 							<div className='grid gap-2 md:gap-6 md:grid-cols-[65%_35%] my-4'>
 								<div>
-									{/* Title */}
 									<header className='mb-4'>
-										<h3 className='font-medium text-xl'>{title}</h3>
-										<p className='text-secondary text-sm font-semibold'>
+										<UpdateTitleInput
+											title={card.title}
+											onSubmit={updateCardTitle}
+											canEdit
+											fullWidth
+										/>
+										<p className='text-secondary text-sm font-semibold mt-1'>
 											in list{' '}
 											<span className='text-tertiary dark:text-secondary-lt'>
 												{listTitle}
